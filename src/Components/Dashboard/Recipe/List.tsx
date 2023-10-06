@@ -1,15 +1,16 @@
 import { ActionIcon, Group, Table, rem } from "@mantine/core"
 import { IconPencil, IconTrash } from '@tabler/icons-react';
+import { IRecipe } from "../../../Interfaces/Recipe";
 
-export function RecipeList() {
-    const data: IRecipe[] = [{ title: "juice" }, { title: "spaghetti dfjla;h djfahlkjdfhlkja djhlkaf hlasjdf" }];
+export function RecipeList(props: {data: IRecipe[], openEdit: (recipe: IRecipe)=> void}) {
+    const data: IRecipe[] = props.data;
     const rows = data.map((item) => (
-        <Table.Tr>
+        <Table.Tr key={crypto.randomUUID()}>
             <Table.Td>{item.title}</Table.Td>
 
             <Table.Td>
                 <Group gap={0} justify="flex-end">
-                    <ActionIcon variant="subtle" color="gray">
+                    <ActionIcon variant="subtle" color="gray" onClick={()=> props.openEdit(item)}>
                         <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
                     <ActionIcon variant="subtle" color="red">
@@ -22,15 +23,13 @@ export function RecipeList() {
     return (
         <Table>
             <Table.Thead>
+                <Table.Tr>
+
                 <Table.Td>Title</Table.Td>
+                </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>
         </Table>
     )
 }
 
-interface IRecipe {
-    title: string,
-    totalTime?: number,
-    description?: string
-}

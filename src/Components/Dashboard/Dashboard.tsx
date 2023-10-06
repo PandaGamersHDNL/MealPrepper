@@ -6,6 +6,7 @@ export function Dashboard() {
     //TODO list or calendar for recipes
     //TODO add recipe
     //TODO manage recipe page?
+    //TODO local storage https://mantine.dev/form/recipes/#save-form-values-to-local-storage
     /*<Modal opened={opened} onClose={close} withCloseButton={false}>
                 <Form form={form}>
                     <TextInput label="Juice" />
