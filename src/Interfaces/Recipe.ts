@@ -1,5 +1,6 @@
 export interface IRecipe {
-    title: string,
+    id?: number
+    title?: string,
     totalTime?: number,
     prepTime?: number,
     cookTime?: number,
@@ -16,6 +17,6 @@ export function createEmptyRecipe():IRecipe {
         cookTime: undefined,
         ingredients: [],
         steps: [],
-        description: undefined
+        description: ""
     }
 }
