@@ -7,7 +7,7 @@ import './index.css'
 import { LocalDataService } from './Services/LocalData';
 import { IDataService } from './Interfaces/DataService';
 
-//TODO create factory to decide which service to use
+//LATER TODO create factory to decide which service to use
 export const DataManager: IDataService = new LocalDataService();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
