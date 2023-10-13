@@ -6,7 +6,9 @@ export interface IRecipe {
     cookTime?: number,
     ingredients?: string[],
     steps?: string[],
-    description?: string
+    description?: string,
+    calories?: number,
+    rating?: number
 }
 
 export function createEmptyRecipe():IRecipe {
