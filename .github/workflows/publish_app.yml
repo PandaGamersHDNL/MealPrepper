@@ -18,7 +18,7 @@ jobs:
       - run: npm run build
       - uses: actions/upload-pages-artifact@v2.0.0
         with:
-          path: _site/dist
+          path: ./dist
 
   deploy:
     # Add a dependency to the build job
