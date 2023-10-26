@@ -1,9 +1,9 @@
 import { ActionIcon, Group, Table, rem } from "@mantine/core";
-import { MealScheduleGenService } from "../../../Services/MealScheduleGen"
 import { IconPencil, IconTrash } from "@tabler/icons-react";
+import { DataManager } from "../../../main";
 
 export function MealList() {
-    const data = MealScheduleGenService.GenMeals(7);
+    const data = DataManager.GetMeals();
     const rows = data.map((item) => (
         <Table.Tr key={"mli"+ item.recipe.id}>
             <Table.Td>{item.recipe.title}</Table.Td>

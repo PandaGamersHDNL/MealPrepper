@@ -47,16 +47,19 @@ export class LocalDataService implements IDataService {
         }
         console.log("finished loading", Date.now());
 
-        this.AddMeals()
     }
     GetMeals(): IMeal[] {
         return this.meals;
     }
     AddMeals(meal: IMeal | IMeal[]): boolean {
+        console.log(meal);
+
         if(Array.isArray(meal)) {
             meal.map(v => v.id = this.mealId++)
             this.meals.concat(meal)
         } else {
+            console.log(meal);
+            
             meal.id = this.mealId++;
             this.meals.push(meal);
         }
@@ -104,7 +107,7 @@ export class LocalDataService implements IDataService {
     }
 
     private saveMeals() {
-        window.localStorage.setItem(LocalDataService.mealName, JSON.stringify(this.recipes));
+        window.localStorage.setItem(LocalDataService.mealName, JSON.stringify(this.meals));
     }
 
 

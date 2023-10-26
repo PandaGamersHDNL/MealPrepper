@@ -1,17 +1,15 @@
-import { Meal } from "../Interfaces/Meal";
 import { DataManager } from "../main";
 
 export class MealScheduleGenService {
     //generate
     static GenMeals(days: number) {
         const recipes = DataManager.GetRecipes();
-        const meals: Meal[] = [];
         for (let i = 0; i < days; i++) {
             const recipe = recipes[this.RandomInt(recipes.length)];
             const dateOfMeal = this.AddDays(new Date, i);
-            meals.push({ date: dateOfMeal, recipe: recipe });
+            DataManager.AddMeals({ date: dateOfMeal, recipe: recipe })
         }
-        return meals;
+        return DataManager.GetMeals();
     }
 
     static AddDays(date: Date, days: number) {
