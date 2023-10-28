@@ -31,7 +31,7 @@ export function RecipeManager() {
                 </ActionIcon>
             </Group>
             <RecipeList data={RecipesDisplay} openEdit={openEdit} updateRecipes={(recipe: IRecipe[])=> {setAllRecipes(recipe)}} />
-            <RecipeFormModal opened={opened} onClose={close} closeModal={close} data={editData} />
+            <RecipeFormModal opened={opened} onClose={close} close={close} data={editData} />
         </div>
     )
 }

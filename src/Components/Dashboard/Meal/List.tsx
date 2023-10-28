@@ -5,7 +5,7 @@ import { DataManager } from "../../../main";
 export function MealList() {
     const data = DataManager.GetMeals();
     const rows = data.map((item) => (
-        <Table.Tr key={"mli"+ item.recipe.id}>
+        <Table.Tr key={"mli"+ item.id}>
             <Table.Td>{item.recipe.title}</Table.Td>
             <Table.Td>{item.date.toLocaleDateString()}</Table.Td>
             <Table.Td>

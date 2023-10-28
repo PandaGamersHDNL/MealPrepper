@@ -18,13 +18,15 @@ export class LocalDataService implements IDataService {
         const mealData = window.localStorage.getItem(LocalDataService.mealName);
         try {
             if (!mealData) throw Error("no meal data")
-            this.recipes = JSON.parse(mealData)
+            this.meals = JSON.parse(mealData)
             console.log("parse successfull");
             //find highest id
             this.meals.forEach(v => {
                 if (v.id && v.id > this.mealId) {
                     this.mealId = v.id;
                 }
+
+                v.date = new Date(v.date)
             })
             this.recipeId++;
         } catch {
@@ -46,19 +48,19 @@ export class LocalDataService implements IDataService {
             this.saveRecipes();
         }
         console.log("finished loading", Date.now());
-
     }
+
     GetMeals(): IMeal[] {
         return this.meals;
     }
     AddMeals(meal: IMeal | IMeal[]): boolean {
-        console.log(meal);
+        //console.log(meal);
 
         if(Array.isArray(meal)) {
             meal.map(v => v.id = this.mealId++)
             this.meals.concat(meal)
         } else {
-            console.log(meal);
+            //console.log(meal);
             
             meal.id = this.mealId++;
             this.meals.push(meal);

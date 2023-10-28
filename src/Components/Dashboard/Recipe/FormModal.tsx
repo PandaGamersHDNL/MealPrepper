@@ -1,10 +1,10 @@
-import { Button, Group, Modal, ModalProps, TextInput, Textarea, InputLabel, NumberInput, Rating } from "@mantine/core";
+import { Button, Group, Modal, TextInput, Textarea, InputLabel, NumberInput, Rating } from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { IRecipe, createEmptyRecipe } from "../../../Interfaces/Recipe";
 import { useEffect } from "react";
 import { DataManager } from "../../../main";
 
-export function RecipeFormModal(props: { data: IRecipe, closeModal: () => void } & ModalProps) {
+export function RecipeFormModal(props: { data: IRecipe, close: () => void, opened: boolean }) {
     const form = useForm<IRecipe>({ initialValues: createEmptyRecipe() });
 
     //console.log("test modal change", props.data)
@@ -15,7 +15,7 @@ export function RecipeFormModal(props: { data: IRecipe, closeModal: () => void }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.data]);
     return (
-        <Modal {...props} centered title={"Recipe"} >
+        <Modal onClose={props.close} opened={props.opened}  centered title={"Recipe"} >
             <Form form={form} onSubmit={(value) => {
                 console.log(value);
                 if (props.data.id) {
@@ -23,7 +23,7 @@ export function RecipeFormModal(props: { data: IRecipe, closeModal: () => void }
                 } else {
                     DataManager.AddRecipe(value);
                 }
-                props.closeModal();
+                props.close();
             }} >
                 <TextInput label="Title" {...form.getInputProps("title")} />
                 <Textarea label="Description" {...form.getInputProps("description")} />
@@ -54,7 +54,7 @@ export function RecipeFormModal(props: { data: IRecipe, closeModal: () => void }
                 </Group>
                 <Group justify="center" mt="xl">
                     <Button onClick={() => {
-                        props.closeModal();
+                        props.close();
                     }}>Cancel</Button>
                     <Button type="reset">Reset</Button>
                     <Button type="submit" >{props.data.id ? "save" : "add"}</Button>

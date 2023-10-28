@@ -3,7 +3,12 @@ import { DataManager } from "../main";
 export class MealScheduleGenService {
     //generate
     static GenMeals(days: number) {
+        console.log("generating for " + days + " days");
+        
         const recipes = DataManager.GetRecipes();
+        if(recipes.length <= 0) {
+            throw new Error("no recipes available")
+        }
         for (let i = 0; i < days; i++) {
             const recipe = recipes[this.RandomInt(recipes.length)];
             const dateOfMeal = this.AddDays(new Date, i);
@@ -20,6 +25,8 @@ export class MealScheduleGenService {
     // min  inclusive
     static RandomInt(max: number, min = 0): number {
         const random = Math.floor(Math.random() * max) + min;
+        console.log(random);
+        
         return random
     }
 }
