@@ -1,12 +1,10 @@
-import { MealGenerator } from "./Meal/Generator";
-import { MealList } from "./Meal/List";
+import { MealManager } from "./Meal/Manager";
 import { RecipeManager } from "./Recipe/Manager";
 
 export function Dashboard() {
     return (
         <>
-            <MealGenerator />
-            <MealList/>
+            <MealManager />
             <RecipeManager/>
         </>
     )

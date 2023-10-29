@@ -3,7 +3,7 @@ import { Form, useForm } from "@mantine/form";
 import { MealScheduleGenService } from "../../../Services/MealScheduleGen";
 import { DataManager } from "../../../main";
 
-export function MealGeneratorModal(props: { opened: boolean, Close: () => void }) {
+export function MealModal(props: { opened: boolean, Close: () => void }) {
     const form = useForm<{ length: number }>({ initialValues: { length: 7 } });
     return <>
         <Modal opened={props.opened} onClose={props.Close}>

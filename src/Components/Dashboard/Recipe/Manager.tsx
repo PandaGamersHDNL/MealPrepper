@@ -19,9 +19,6 @@ export function RecipeManager() {
     const [filter, setFilter] = useState("");
     const RecipesDisplay = allRecipes.filter(v => v.title?.includes(filter))
 
-    //useEffect(()=> {},[])
-    //add button, search bar
-    //on recipe clicked open details, edit and delete buttons
     return (
         <div id="Recipes">
             <Group id="RecipeHeader" justify="center">
@@ -31,7 +28,7 @@ export function RecipeManager() {
                 </ActionIcon>
             </Group>
             <RecipeList data={RecipesDisplay} openEdit={openEdit} updateRecipes={(recipe: IRecipe[])=> {setAllRecipes(recipe)}} />
-            <RecipeFormModal opened={opened} onClose={close} close={close} data={editData} />
+            <RecipeFormModal opened={opened} close={close} data={editData} />
         </div>
     )
 }

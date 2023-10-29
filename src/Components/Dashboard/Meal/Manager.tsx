@@ -1,14 +1,16 @@
 import { Button, Group } from "@mantine/core";
-import { MealGeneratorModal } from "./GeneratorModal";
+import { MealModal } from "./Modal";
 import { useDisclosure } from "@mantine/hooks";
+import { MealList } from "./List";
 
-export function MealGenerator() {
+export function MealManager() {
     const [opened, { open, close }] = useDisclosure(false);
     return (
         <>
             <Group>
                 <Button onClick={open}>generate meals</Button>
-                <MealGeneratorModal opened={opened} Close={close}/>
+                <MealModal opened={opened} Close={close}/>
+                <MealList />
             </Group>
         </>
     )

@@ -9,7 +9,6 @@ export function RecipeFormModal(props: { data: IRecipe, close: () => void, opene
 
     //console.log("test modal change", props.data)
     useEffect(() => {
-
         form.setValues((v) => { return { ...v, ...props.data } })
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,9 +1,11 @@
 import { ActionIcon, Group, Table, rem } from "@mantine/core";
 import { IconPencil, IconTrash } from "@tabler/icons-react";
 import { DataManager } from "../../../main";
+import { useState } from "react";
+import { IMeal } from "../../../Interfaces/Meal";
 
 export function MealList() {
-    const data = DataManager.GetMeals();
+    const [data] = useState<IMeal[]>(DataManager.GetMeals());
     const rows = data.map((item) => (
         <Table.Tr key={"mli"+ item.id}>
             <Table.Td>{item.recipe.title}</Table.Td>
