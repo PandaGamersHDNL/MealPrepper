@@ -8,6 +8,7 @@ import { IUserData } from "../Interfaces/UserData";
 
 
 export class LocalDataService implements IDataService {
+    //TODO make 1 object -> IUserData?
     private Recipes: IRecipe[] = [];
     private Meals: IMeal[] = [];
     private Ingredients: IIngredient[] = [];
@@ -53,6 +54,9 @@ export class LocalDataService implements IDataService {
         }
         console.log("finished loading", Date.now());
     }
+    
+    
+
     GetUserData(requestList: IImpexList | undefined): IUserData {
         const data: IUserData = {};
         if(!requestList || requestList.Ingredients){
@@ -62,13 +66,19 @@ export class LocalDataService implements IDataService {
             data.Meals = this.GetMeals();
         }
         if(!requestList || requestList.Recipes){
-            console.log("get recipes");
-            
             data.Recipes = this.GetRecipes();
         }
-        console.log(data);
-        
         return data;
+    }
+
+    setUserData(data: IUserData): boolean {
+        for(const [key, value] of Object.entries(data)) {
+            console.log(value);
+            localStorage.setItem(key,JSON.stringify(value));
+            
+        }
+        console.log(data);
+        return true
     }
 
     GetMeals(): IMeal[] {
