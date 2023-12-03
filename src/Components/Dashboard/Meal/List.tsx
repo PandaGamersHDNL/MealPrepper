@@ -5,17 +5,17 @@ import { useState } from "react";
 import { IMeal } from "../../../Interfaces/Meal";
 
 export function MealList() {
-    const [data] = useState<IMeal[]>(DataManager.GetMeals());
+    const [data, setData] = useState<IMeal[]>(DataManager.GetMeals());
     const rows = data.map((item) => (
         <Table.Tr key={"mli"+ item.id}>
             <Table.Td>{item.recipe.title}</Table.Td>
             <Table.Td>{item.date.toLocaleDateString()}</Table.Td>
             <Table.Td>
                 <Group gap={0} justify="flex-end">
-                    <ActionIcon variant="subtle" color="gray">
+                    <ActionIcon variant="subtle" color="gray" disabled>
                         <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
-                    <ActionIcon variant="subtle" color="red">
+                    <ActionIcon variant="subtle" color="red" onClick={()=> {DataManager.DeleteMeal(item.id!); setData(DataManager.GetMeals());}}>
                         <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
                 </Group>
