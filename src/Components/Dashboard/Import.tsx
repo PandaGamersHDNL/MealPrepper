@@ -21,9 +21,10 @@ export function ImportButton() {
         <Modal opened={opened} onClose={close} > 
             <Form form={formData} onSubmit={async (list)=> { 
                 ImportService.ImportJSON(await list.file.text());
+                close();
             }}>
                 <FileInput  accept="json" {...formData.getInputProps("file")}></FileInput>
-                <Button type="submit" >export</Button>
+                <Button type="submit" >Import</Button>
             </Form>
         </Modal>
     </Group>);
