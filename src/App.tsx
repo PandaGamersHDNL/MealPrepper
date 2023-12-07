@@ -12,7 +12,7 @@ export const UserDataCTX = createContext<{
  }>(null);
 
 function App() {
-    const [userData, setUserData] = useState<IUserData>();
+    const [userData, setUserData] = useState<IUserData>({Ingredients: [], Meals: [] ,Recipes: []});
     const DataManager: IDataService = new LocalDataService(userData!, setUserData);
   
         return ( 

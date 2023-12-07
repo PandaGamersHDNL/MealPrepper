@@ -14,7 +14,7 @@ export class LocalDataService implements IDataService {
     //names of the local storage item
     private static recipeName = "Recipes";
     private static mealName = "Meals";
-    constructor(private UserData: IUserData , private SetUserData: React.Dispatch<React.SetStateAction<IUserData | undefined>>) {
+    constructor(private UserData: IUserData , private SetUserData: React.Dispatch<React.SetStateAction<IUserData>>) {
         console.log("init local data", Date.now());
 
         const mealData = window.localStorage.getItem(LocalDataService.mealName);
