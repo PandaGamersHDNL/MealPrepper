@@ -7,11 +7,12 @@ import { IconPlus } from "@tabler/icons-react";
 import { IRecipe, createEmptyRecipe } from "../../../Interfaces/Recipe";
 import { useDisclosure } from "@mantine/hooks";
 import { RecipeFormModal } from "./FormModal";
-import { useState } from "react";
-import { DataManager } from "../../../main";
+import { useContext, useState } from "react";
+import { UserDataCTX } from "../../../App";
 
 // need for
 export function RecipeManager() {
+    const DataManager = useContext(UserDataCTX).dataManager;
     const [opened, { open, close }] = useDisclosure(false);
     const [editData, setEditData] = useState<IRecipe>(createEmptyRecipe());
     const openEdit = (recipe: IRecipe) => { setEditData(recipe); open(); }

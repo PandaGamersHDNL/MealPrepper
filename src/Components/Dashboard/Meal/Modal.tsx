@@ -1,10 +1,12 @@
 import { Button, Group, Modal, NumberInput } from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { MealScheduleGenService } from "../../../Services/MealScheduleGen";
-import { DataManager } from "../../../main";
+import { useContext } from "react";
+import { UserDataCTX } from "../../../App";
 
 export function MealModal(props: { opened: boolean, Close: () => void }) {
     const form = useForm<{ length: number }>({ initialValues: { length: 7 } });
+    const DataManager = useContext(UserDataCTX).dataManager;
     return <>
         <Modal opened={props.opened} onClose={props.Close}>
             <Form form={form}>
@@ -12,7 +14,7 @@ export function MealModal(props: { opened: boolean, Close: () => void }) {
                 <Group><Button onClick={() => {
                     try {
 
-                        const meals = MealScheduleGenService.GenMeals(form.values.length);
+                        const meals = MealScheduleGenService.GenMeals(DataManager, form.values.length);
                         console.log(meals);
 
                         DataManager.AddMeals(meals);

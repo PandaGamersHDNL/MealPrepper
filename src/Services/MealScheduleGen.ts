@@ -1,8 +1,8 @@
-import { DataManager } from "../main";
+import { IDataService } from "../Interfaces/DataService";
 
 export class MealScheduleGenService {
     //generate
-    static GenMeals(days: number) {
+    static GenMeals(DataManager: IDataService, days: number) {
         console.log("generating for " + days + " days");
         
         const recipes = DataManager.GetRecipes();

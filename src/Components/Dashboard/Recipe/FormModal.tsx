@@ -1,12 +1,12 @@
 import { Button, Group, Modal, TextInput, Textarea, InputLabel, NumberInput, Rating } from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { IRecipe, createEmptyRecipe } from "../../../Interfaces/Recipe";
-import { useEffect } from "react";
-import { DataManager } from "../../../main";
+import { useContext, useEffect } from "react";
+import { UserDataCTX } from "../../../App";
 
 export function RecipeFormModal(props: { data: IRecipe, close: () => void, opened: boolean }) {
     const form = useForm<IRecipe>({ initialValues: createEmptyRecipe() });
-
+    const DataManager = useContext(UserDataCTX).dataManager;
     //console.log("test modal change", props.data)
     useEffect(() => {
         form.setValues((v) => { return { ...v, ...props.data } })

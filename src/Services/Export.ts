@@ -1,6 +1,6 @@
+import { IDataService } from "../Interfaces/DataService";
 import { IImpexList } from "../Interfaces/ImpexList";
 import { IUserData } from "../Interfaces/UserData";
-import { DataManager } from "../main";
 
 export class ExportService{
     static ExportJSON(data: IUserData) {
@@ -11,7 +11,7 @@ export class ExportService{
         aClick.remove();
     } 
 
-    static ExportListJSON(list: IImpexList){
+    static ExportListJSON(DataManager: IDataService, list: IImpexList){
         const data = DataManager.GetUserData(list);
         console.log(data);
         
