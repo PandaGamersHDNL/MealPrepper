@@ -1,11 +1,14 @@
 import { ActionIcon, Group, Table, rem } from "@mantine/core"
 import { IconPencil, IconTrash } from '@tabler/icons-react';
 import { IRecipe } from "../../../Interfaces/Recipe";
-import { DataManager } from "../../../main";
+import { useContext } from "react";
+import { UserDataCTX } from "../../../App";
 
 export function RecipeList(props: {data: IRecipe[], openEdit: (recipe: IRecipe)=> void, updateRecipes: (recipe: IRecipe[]) => void}) {
-    const data: IRecipe[] = props.data;
-    const rows = data.map((item) => (
+    const userCtx = useContext(UserDataCTX)
+    const DataManager = userCtx.dataManager;
+    const data = userCtx.userData?.Recipes;
+    const rows = data!.map((item) => (
         <Table.Tr key={"ri"+ item.id}>
             <Table.Td>{item.title}</Table.Td>
 

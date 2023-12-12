@@ -1,12 +1,13 @@
 import { ActionIcon, Group, Table, rem } from "@mantine/core";
 import { IconPencil, IconTrash } from "@tabler/icons-react";
-import { DataManager } from "../../../main";
-import { useState } from "react";
-import { IMeal } from "../../../Interfaces/Meal";
+import { useContext } from "react";
+import { UserDataCTX } from "../../../App";
 
 export function MealList() {
-    const [data, setData] = useState<IMeal[]>(DataManager.GetMeals());
-    const rows = data.map((item) => (
+    const userCtx = useContext(UserDataCTX);
+    const data = userCtx.userData?.Meals;
+    const DataManager = userCtx.dataManager;
+    const rows = data!.map((item) => (
         <Table.Tr key={"mli"+ item.id}>
             <Table.Td>{item.recipe.title}</Table.Td>
             <Table.Td>{item.date.toLocaleDateString()}</Table.Td>
@@ -15,7 +16,7 @@ export function MealList() {
                     <ActionIcon variant="subtle" color="gray" disabled>
                         <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
-                    <ActionIcon variant="subtle" color="red" onClick={()=> {DataManager.DeleteMeal(item.id!); setData(DataManager.GetMeals());}}>
+                    <ActionIcon variant="subtle" color="red" onClick={()=> {DataManager.DeleteMeal(item.id!);}}>
                         <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
                 </Group>

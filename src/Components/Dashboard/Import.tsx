@@ -2,6 +2,8 @@ import { Button, FileInput, Group, Modal } from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { ImportService } from "../../Services/Import";
+import { useContext } from "react";
+import { UserDataCTX } from "../../App";
 //import { IImpexList } from "../../Interfaces/ImpexList";
 
 export function ImportButton() {
@@ -9,6 +11,7 @@ export function ImportButton() {
     //Deal with id dublicates (don't forget the dependencies)
     //allow full replace
     const [opened, { open, close }] = useDisclosure(false);
+    const dataManager = useContext(UserDataCTX).dataManager;
     const formData = useForm<{file: File}>();
 
     /* show modal
@@ -20,7 +23,7 @@ export function ImportButton() {
         <Button onClick={open}>Import</Button>
         <Modal opened={opened} onClose={close} > 
             <Form form={formData} onSubmit={async (list)=> { 
-                ImportService.ImportJSON(await list.file.text());
+                ImportService.ImportJSON(dataManager, await list.file.text());
                 close();
             }}>
                 <FileInput  accept="json" {...formData.getInputProps("file")}></FileInput>
