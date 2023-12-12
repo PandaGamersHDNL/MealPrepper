@@ -10,6 +10,7 @@ export const UserDataCTX = createContext<{
     userData?: IUserData, 
     dataManager: IDataService 
  }>(null);
+//LATER TODO create factory to decide which service to use
 
 function App() {
     const [userData, setUserData] = useState<IUserData>({Ingredients: [], Meals: [] ,Recipes: []});

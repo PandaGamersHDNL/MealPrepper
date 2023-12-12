@@ -3,9 +3,12 @@ import { Form, useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { ExportService } from "../../Services/Export";
 import { IImpexList } from "../../Interfaces/ImpexList";
+import { useContext } from "react";
+import { UserDataCTX } from "../../App";
 
 export function ExportButton() {
     const [opened, { open, close }] = useDisclosure(false);
+    const dataManager = useContext(UserDataCTX).dataManager;
     const formData = useForm<IImpexList>({initialValues: {Meals: true, Recipes: true, Ingredients: true}});
 
     /* show modal
@@ -17,7 +20,7 @@ export function ExportButton() {
         <Button onClick={open}>Export</Button>
         <Modal opened={opened} onClose={close} > 
             <Form form={formData} onSubmit={(list)=> { console.log(list);
-            ExportService.ExportListJSON(list)}}>
+            ExportService.ExportListJSON(dataManager, list)}}>
                 <Button type="submit" >export</Button>
             </Form>
         </Modal>

@@ -8,13 +8,12 @@ import { IUserData } from "../Interfaces/UserData";
 
 
 export class LocalDataService implements IDataService {
-    //TODO make 1 object -> IUserData?
     private recipeId = 0;
     private mealId = 0;
     //names of the local storage item
     private static recipeName = "Recipes";
     private static mealName = "Meals";
-    constructor(private UserData: IUserData , private SetUserData: React.Dispatch<React.SetStateAction<IUserData>>) {
+    constructor(private UserData: IUserData , private SetLocalData: React.Dispatch<React.SetStateAction<IUserData>>) {
         console.log("init local data", Date.now());
 
         const mealData = window.localStorage.getItem(LocalDataService.mealName);
@@ -70,10 +69,9 @@ export class LocalDataService implements IDataService {
 
     setUserData(data: IUserData): boolean {
         for(const [key, value] of Object.entries(data)) {
-            console.log(value);
             localStorage.setItem(key,JSON.stringify(value));
-            
         }
+        this.SetLocalData(data);
         console.log(data);
         return true
     }
