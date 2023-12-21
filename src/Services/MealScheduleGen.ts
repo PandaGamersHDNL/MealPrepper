@@ -4,9 +4,9 @@ import { IMeal } from "../Interfaces/Meal";
 export class MealScheduleGenService {
     //generate
     static GenMeals(DataManager: IDataService, days: number, startDate?: Date ) {
-        console.log("generating for " + days + " days");
         const date = startDate || new Date();
-
+        console.log("generating for " + days + " days", date);
+        
         const recipes = DataManager.GetRecipes();
         if(recipes.length <= 0) {
             throw new Error("no recipes available")
@@ -14,7 +14,7 @@ export class MealScheduleGenService {
         const genMeals:IMeal[] = [];
         for (let i = 0; i < days; i++) {
             const recipe = recipes[this.RandomInt(recipes.length)];
-            const dateOfMeal = this.AddDays(date, i);
+            const dateOfMeal = this.AddDays(new Date(date), i);
             genMeals.push({date: dateOfMeal, recipe })
         }
         return DataManager.AddMeals(genMeals);

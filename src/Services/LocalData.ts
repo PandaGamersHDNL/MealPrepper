@@ -76,19 +76,22 @@ export class LocalDataService implements IDataService {
     }
 
     GetMeals(): IMeal[] {
-        return this.UserData.Meals!;
+        return this.UserData.Meals || [];
     }
     AddMeals(meal: IMeal | IMeal[]): IMeal[] {
-        //console.log(meal);
-        const res = this.GetMeals();
+        let res = this.GetMeals();
+        console.log("current", res);
         if(Array.isArray(meal)) {
             meal.map(v => v.id = this.mealId++);
-            res.concat(meal);
+            res = res.concat(meal);
+            
         } else {
             meal.id = this.mealId++;
             res.push(meal);
         }
         this.saveMeals(res);
+        console.log("after save" ,res);
+        
         return res;
     }
     UpdateMeal(meal: IMeal): IMeal[] {
@@ -139,6 +142,8 @@ export class LocalDataService implements IDataService {
 
     private saveMeals(meals: IMeal[] = []) {
         window.localStorage.setItem(LocalDataService.mealName, JSON.stringify(meals));
+        console.log("saving meals");
+        
     }
 
     private saveIngredients(ingre: IIngredient[] = []) {

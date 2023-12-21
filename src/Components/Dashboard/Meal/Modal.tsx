@@ -7,7 +7,8 @@ import { UserDataCTX } from "../../../App";
 
 export function MealModal(props: { opened: boolean, Close: () => void }) {
     const form = useForm<{ length: number, startDate: Date }>({ initialValues: { length: 7, startDate: new Date() } });
-    const DataManager = useContext(UserDataCTX)!.dataManager;
+    const userDataCtx = useContext(UserDataCTX)!;
+    
     return <>
         <Modal opened={props.opened} onClose={props.Close}>
             <Form form={form}>
@@ -17,13 +18,11 @@ export function MealModal(props: { opened: boolean, Close: () => void }) {
                     try {
 
                         const meals = MealScheduleGenService.GenMeals(
-                            DataManager, 
+                            userDataCtx.dataManager, 
                             form.values.length, 
                             form.values.startDate
                         );
-                        console.log(meals);
-
-                        //DataManager.AddMeals(meals);
+                        userDataCtx.setUserData({Meals: meals})
                         props.Close();
                     } catch (m) {
                         alert(m)
