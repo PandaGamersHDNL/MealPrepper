@@ -1,11 +1,9 @@
 import { IDataService } from "../Interfaces/DataService";
 import { IImpexList } from "../Interfaces/ImpexList";
 import { IIngredient } from "../Interfaces/Ingredient";
-//import { IIngredient } from "../Interfaces/Ingredient";
 import { IMeal } from "../Interfaces/Meal";
 import { IRecipe } from "../Interfaces/Recipe";
 import { IUserData } from "../Interfaces/UserData";
-//import { IUserSettings } from "../Interfaces/UserSettings";
 
 //TODO Make sure every function returns the new state of the items
 //TODO verify everything works like it should
@@ -29,7 +27,6 @@ export class LocalDataService implements IDataService {
                 if (v.id && v.id > this.mealId) {
                     this.mealId = v.id;
                 }
-
                 v.date = new Date(v.date)
             })
             this.recipeId++;
