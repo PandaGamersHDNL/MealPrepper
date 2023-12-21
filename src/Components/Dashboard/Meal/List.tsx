@@ -4,10 +4,10 @@ import { useContext } from "react";
 import { UserDataCTX } from "../../../App";
 
 export function MealList() {
-    const userCtx = useContext(UserDataCTX);
-    const data = userCtx.userData?.Meals;
+    const userCtx = useContext(UserDataCTX)!;
+    console.log("meal list update")
     const DataManager = userCtx.dataManager;
-    const rows = data!.map((item) => (
+    const rows = userCtx.userData?.Meals!.map((item) => (
         <Table.Tr key={"mli"+ item.id}>
             <Table.Td>{item.recipe.title}</Table.Td>
             <Table.Td>{item.date.toLocaleDateString()}</Table.Td>

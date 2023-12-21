@@ -1,11 +1,13 @@
 import { ActionIcon, Group, Table, rem } from "@mantine/core"
 import { IconPencil, IconTrash } from '@tabler/icons-react';
-import { IRecipe } from "../../../Interfaces/Recipe";
 import { useContext } from "react";
 import { UserDataCTX } from "../../../App";
+import { IRecipe } from "../../../Interfaces/Recipe";
 
-export function RecipeList(props: {data: IRecipe[], openEdit: (recipe: IRecipe)=> void, updateRecipes: (recipe: IRecipe[]) => void}) {
-    const userCtx = useContext(UserDataCTX)
+export function RecipeList(props: { openEdit: (recipe: IRecipe)=> void}) {
+    const userCtx = useContext(UserDataCTX)!;
+    console.log("recipe list update");
+    
     const DataManager = userCtx.dataManager;
     const data = userCtx.userData?.Recipes;
     const rows = data!.map((item) => (
@@ -17,7 +19,7 @@ export function RecipeList(props: {data: IRecipe[], openEdit: (recipe: IRecipe)=
                     <ActionIcon variant="subtle" color="gray" onClick={()=> props.openEdit(item)}>
                         <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
-                    <ActionIcon variant="subtle" color="red" onClick={()=> props.updateRecipes(DataManager.DeleteRecipe(item.id!))}>
+                    <ActionIcon variant="subtle" color="red" onClick={()=> DataManager.DeleteRecipe(item.id!)}>
                         <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
                 </Group>

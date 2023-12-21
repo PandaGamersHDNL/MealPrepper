@@ -13,7 +13,7 @@ export class LocalDataService implements IDataService {
     //names of the local storage item
     private static recipeName = "Recipes";
     private static mealName = "Meals";
-    constructor(private UserData: IUserData , private SetLocalData: React.Dispatch<React.SetStateAction<IUserData>>) {
+    constructor(private UserData: IUserData) {
         console.log("init local data", Date.now());
 
         const mealData = window.localStorage.getItem(LocalDataService.mealName);
@@ -50,8 +50,6 @@ export class LocalDataService implements IDataService {
         }
         console.log("finished loading", Date.now());
     }
-    
-    
 
     GetUserData(requestList: IImpexList | undefined): IUserData {
         const data: IUserData = {};
@@ -71,7 +69,6 @@ export class LocalDataService implements IDataService {
         for(const [key, value] of Object.entries(data)) {
             localStorage.setItem(key,JSON.stringify(value));
         }
-        this.SetLocalData(data);
         console.log(data);
         return true
     }
@@ -100,15 +97,18 @@ export class LocalDataService implements IDataService {
     }
     DeleteMeal(id: number): IMeal[] {
         console.info("deleting meal", id);
-        this.UserData.Meals = this.UserData.Meals!.filter((v) => v.id != id);
+        
         this.saveMeals();
-        return this.UserData.Meals;
+        return this.UserData.Meals!;
     }
     DeleteRecipe(id: number): IRecipe[] {
         console.info("deleting recipe ", id);
-        this.UserData.Recipes = this.UserData.Recipes!.filter((v) => v.id != id);
+        
+        this.SetLocalData({Ingredients: [], Meals: [], Recipes: []});
         this.saveRecipes();
-        return this.UserData.Recipes;
+        console.log(this.UserData);
+        
+        return this.UserData.Recipes!;
     }
 
     GetRecipes(): IRecipe[] {

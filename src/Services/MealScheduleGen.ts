@@ -2,16 +2,17 @@ import { IDataService } from "../Interfaces/DataService";
 
 export class MealScheduleGenService {
     //generate
-    static GenMeals(DataManager: IDataService, days: number) {
+    static GenMeals(DataManager: IDataService, days: number, startDate?: Date ) {
         console.log("generating for " + days + " days");
-        
+        const date = startDate || new Date();
+
         const recipes = DataManager.GetRecipes();
         if(recipes.length <= 0) {
             throw new Error("no recipes available")
         }
         for (let i = 0; i < days; i++) {
             const recipe = recipes[this.RandomInt(recipes.length)];
-            const dateOfMeal = this.AddDays(new Date, i);
+            const dateOfMeal = this.AddDays(date, i);
             DataManager.AddMeals({ date: dateOfMeal, recipe: recipe })
         }
         return DataManager.GetMeals();

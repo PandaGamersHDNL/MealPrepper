@@ -11,7 +11,7 @@ export function ImportButton() {
     //Deal with id dublicates (don't forget the dependencies)
     //allow full replace
     const [opened, { open, close }] = useDisclosure(false);
-    const dataManager = useContext(UserDataCTX).dataManager;
+    const dataManager = useContext(UserDataCTX)!.dataManager;
     const formData = useForm<{file: File}>();
 
     /* show modal

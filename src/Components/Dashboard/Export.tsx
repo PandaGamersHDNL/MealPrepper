@@ -8,7 +8,7 @@ import { UserDataCTX } from "../../App";
 
 export function ExportButton() {
     const [opened, { open, close }] = useDisclosure(false);
-    const dataManager = useContext(UserDataCTX).dataManager;
+    const dataManager = useContext(UserDataCTX)!.dataManager;
     const formData = useForm<IImpexList>({initialValues: {Meals: true, Recipes: true, Ingredients: true}});
 
     /* show modal
