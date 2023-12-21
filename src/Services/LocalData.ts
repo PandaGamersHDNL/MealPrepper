@@ -51,15 +51,17 @@ export class LocalDataService implements IDataService {
         console.log("finished loading", Date.now());
     }
 
+    //important for exporting
     GetUserData(requestList: IImpexList | undefined): IUserData {
+        if(!requestList) return this.UserData;
         const data: IUserData = {};
-        if(!requestList || requestList.Ingredients){
+        if( requestList.Ingredients){
             //GetIngredients()
         }
-        if(!requestList || requestList.Meals){
+        if( requestList.Meals){
             data.Meals = this.GetMeals();
         }
-        if(!requestList || requestList.Recipes){
+        if( requestList.Recipes){
             data.Recipes = this.GetRecipes();
         }
         return data;
@@ -104,7 +106,6 @@ export class LocalDataService implements IDataService {
     DeleteRecipe(id: number): IRecipe[] {
         console.info("deleting recipe ", id);
         
-        this.SetLocalData({Ingredients: [], Meals: [], Recipes: []});
         this.saveRecipes();
         console.log(this.UserData);
         
