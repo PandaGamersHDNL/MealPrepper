@@ -1,7 +1,7 @@
 //List, managing a list / -> edit / del / on click open detailed view
 // modal: edit, add recipes/ edits / del / on save either to detailed view or to dashboard
 
-import { ActionIcon, Group, TextInput, rem } from "@mantine/core";
+import { ActionIcon, Group, rem } from "@mantine/core";
 import { RecipeList } from "./List";
 import { IconPlus } from "@tabler/icons-react";
 import { IRecipe, createEmptyRecipe } from "../../../Interfaces/Recipe";

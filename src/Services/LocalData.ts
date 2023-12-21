@@ -1,6 +1,6 @@
 import { IDataService } from "../Interfaces/DataService";
 import { IImpexList } from "../Interfaces/ImpexList";
-import { IIngredient } from "../Interfaces/Ingredient";
+//import { IIngredient } from "../Interfaces/Ingredient";
 import { IMeal } from "../Interfaces/Meal";
 import { IRecipe } from "../Interfaces/Recipe";
 import { IUserData } from "../Interfaces/UserData";
@@ -13,7 +13,7 @@ export class LocalDataService implements IDataService {
     //names of the local storage item
     private static recipeName = "Recipes";
     private static mealName = "Meals";
-    private static ingreName = "Ingredients";
+    //private static ingreName = "Ingredients";
     constructor(private UserData: IUserData) {
         console.log("init local data", Date.now());
 
@@ -146,7 +146,7 @@ export class LocalDataService implements IDataService {
         
     }
 
-    private saveIngredients(ingre: IIngredient[] = []) {
+    /*private saveIngredients(ingre: IIngredient[] = []) {
         window.localStorage.setItem(LocalDataService.ingreName, JSON.stringify(ingre));
-    }
+    }*/
 }
