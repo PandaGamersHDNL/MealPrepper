@@ -16,7 +16,7 @@ export function MealList() {
                     <ActionIcon variant="subtle" color="gray" disabled>
                         <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
-                    <ActionIcon variant="subtle" color="red" onClick={()=> {DataManager.DeleteMeal(item.id!);}}>
+                    <ActionIcon variant="subtle" color="red" onClick={()=> {userCtx.setUserData({ Meals: DataManager.DeleteMeal(item.id!)})}}>
                         <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
                 </Group>

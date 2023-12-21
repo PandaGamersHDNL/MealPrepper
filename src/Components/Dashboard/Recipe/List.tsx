@@ -19,7 +19,7 @@ export function RecipeList(props: { openEdit: (recipe: IRecipe)=> void}) {
                     <ActionIcon variant="subtle" color="gray" onClick={()=> props.openEdit(item)}>
                         <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
-                    <ActionIcon variant="subtle" color="red" onClick={()=> DataManager.DeleteRecipe(item.id!)}>
+                    <ActionIcon variant="subtle" color="red" onClick={()=> userCtx.setUserData({Recipes: DataManager.DeleteRecipe(item.id!)})}>
                         <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
                 </Group>
