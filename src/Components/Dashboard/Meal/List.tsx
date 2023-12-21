@@ -1,25 +1,22 @@
-import { ActionIcon, Group, Table, rem } from "@mantine/core"
-import { IconPencil, IconTrash } from '@tabler/icons-react';
+import { ActionIcon, Group, Table, rem } from "@mantine/core";
+import { IconPencil, IconTrash } from "@tabler/icons-react";
 import { useContext } from "react";
 import { UserDataCTX } from "../../../App";
-import { IRecipe } from "../../../Interfaces/Recipe";
 
-export function RecipeList(props: { openEdit: (recipe: IRecipe)=> void}) {
+export function MealList() {
     const userCtx = useContext(UserDataCTX)!;
-    console.log("recipe list update");
-    
+    console.log("meal list update")
     const DataManager = userCtx.dataManager;
-    const data = userCtx.userData?.Recipes;
-    const rows = data!.map((item) => (
-        <Table.Tr key={"ri"+ item.id}>
-            <Table.Td>{item.title}</Table.Td>
-
+    const rows = userCtx.userData?.Meals!.map((item) => (
+        <Table.Tr key={"mli"+ item.id}>
+            <Table.Td>{item.recipe.title}</Table.Td>
+            <Table.Td>{item.date.toLocaleDateString()}</Table.Td>
             <Table.Td>
                 <Group gap={0} justify="flex-end">
-                    <ActionIcon variant="subtle" color="gray" onClick={()=> props.openEdit(item)}>
+                    <ActionIcon variant="subtle" color="gray" disabled>
                         <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
-                    <ActionIcon variant="subtle" color="red" onClick={()=> userCtx.setUserData({Recipes: DataManager.DeleteRecipe(item.id!)})}>
+                    <ActionIcon variant="subtle" color="red" onClick={()=> {userCtx.setUserData({ Meals: DataManager.DeleteMeal(item.id!)})}}>
                         <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>
                 </Group>
@@ -31,11 +28,12 @@ export function RecipeList(props: { openEdit: (recipe: IRecipe)=> void}) {
             <Table.Thead>
                 <Table.Tr>
 
-                <Table.Td>Title</Table.Td>
+                <Table.Td>Recipe</Table.Td>
+                <Table.Td>Day</Table.Td>
                 </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>
         </Table>
     )
-}
 
+}

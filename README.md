@@ -1,6 +1,8 @@
 # MealPrepper
 React app that let's you have recipes stored that then will be able to generate a meal schedule for a certain amount of time
 
+TODO steps create a gen component (settings for the gen of meals, includes start date, end date and/or amount of days, allowed tags (all of them or at least one of them LATER), exclusion length (the amount of days you won't allow the same recipe))
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
