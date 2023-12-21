@@ -7,7 +7,8 @@ import { IRecipe } from "../Interfaces/Recipe";
 import { IUserData } from "../Interfaces/UserData";
 //import { IUserSettings } from "../Interfaces/UserSettings";
 
-//Make sure every function returns the new state of the items
+//TODO Make sure every function returns the new state of the items
+//TODO verify everything works like it should
 export class LocalDataService implements IDataService {
     private recipeId = 0;
     private mealId = 0;
@@ -102,15 +103,14 @@ export class LocalDataService implements IDataService {
     }
     DeleteMeal(id: number): IMeal[] {
         console.info("deleting meal", id);
-        const res = this.GetMeals();
-        res.filter((v)=> v.id != id);
+        const res = this.GetMeals().filter((v)=> v.id != id);
         this.saveMeals(res);
         return res;
     }
     DeleteRecipe(id: number): IRecipe[] {
         console.info("deleting recipe ", id);
-        const res = this.GetRecipes();
-        res.filter(v => v != id);        
+        const res = this.GetRecipes().filter((v) => v.id != id);        
+        console.log("del res" , res);
         this.saveRecipes(res);
         return res;
     }
@@ -136,6 +136,8 @@ export class LocalDataService implements IDataService {
 
     private saveRecipes(recipes: IRecipe[] =[]) {
         window.localStorage.setItem(LocalDataService.recipeName, JSON.stringify(recipes));
+        console.log("saving recipes", recipes);
+        
     }
 
     private saveMeals(meals: IMeal[] = []) {
