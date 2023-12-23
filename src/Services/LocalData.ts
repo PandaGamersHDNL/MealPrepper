@@ -1,5 +1,6 @@
 import { IDataService } from "../Interfaces/DataService";
 import { IImpexList } from "../Interfaces/ImpexList";
+import { IIngredient } from "../Interfaces/Ingredient";
 //import { IIngredient } from "../Interfaces/Ingredient";
 import { IMeal } from "../Interfaces/Meal";
 import { IRecipe } from "../Interfaces/Recipe";
@@ -133,6 +134,20 @@ export class LocalDataService implements IDataService {
         this.saveRecipes(res);
         return res;
     }
+
+    GetIngr(): IIngredient[] {
+        throw new Error("Method not implemented.");
+    }
+    AddIngr(meals: IIngredient | IIngredient[]): IIngredient[] {
+        throw new Error("Method not implemented.");
+    }
+    UpdateIngr(Ingr: IIngredient): IIngredient[] {
+        throw new Error("Method not implemented.");
+    }
+    DeleteIngr(id: number): IIngredient[] {
+        throw new Error("Method not implemented.");
+    }
+
 
     private saveRecipes(recipes: IRecipe[] =[]) {
         window.localStorage.setItem(LocalDataService.recipeName, JSON.stringify(recipes));

@@ -1,4 +1,5 @@
 import { IImpexList } from "./ImpexList";
+import { IIngredient } from "./Ingredient";
 import { IMeal } from "./Meal";
 import { IRecipe } from "./Recipe";
 import { IUserData } from "./UserData";
@@ -19,6 +20,11 @@ export interface IDataService {
     AddMeals(meals: IMeal | IMeal[]): IMeal[],
     UpdateMeal(meal: IMeal): IMeal[],
     DeleteMeal(id: number): IMeal[]
+
+    GetIngr(): IIngredient[],
+    AddIngr(meals: IIngredient | IIngredient[]): IIngredient[],
+    UpdateIngr(Ingr: IIngredient): IIngredient[],
+    DeleteIngr(id: number): IIngredient[]
     //GetUserSettings(): IUserSettings,
     //UpdateUserSettings(userSettings: IUserSettings): boolean
 }

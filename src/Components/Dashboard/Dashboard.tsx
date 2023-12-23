@@ -1,5 +1,6 @@
 import { ExportButton } from "./Export";
 import { ImportButton } from "./Import";
+import { IngrManager } from "./Ingredients/Manager";
 import { MealManager } from "./Meal/Manager";
 import { RecipeManager } from "./Recipe/Manager";
 
@@ -10,6 +11,7 @@ export function Dashboard() {
             <ImportButton/>
             <MealManager />
             <RecipeManager/>
+            <IngrManager />
         </>
     )
 }
