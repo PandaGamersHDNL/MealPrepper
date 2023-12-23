@@ -13,7 +13,7 @@ export class LocalDataService implements IDataService {
     //names of the local storage item
     private static recipeName = "Recipes";
     private static mealName = "Meals";
-    //private static ingreName = "Ingredients";
+    //private static ingrName = "Ingredients";
     constructor(private UserData: IUserData) {
         console.log("init local data", Date.now());
 
@@ -147,6 +147,6 @@ export class LocalDataService implements IDataService {
     }
 
     /*private saveIngredients(ingre: IIngredient[] = []) {
-        window.localStorage.setItem(LocalDataService.ingreName, JSON.stringify(ingre));
+        window.localStorage.setItem(LocalDataService.ingrName, JSON.stringify(ingre));
     }*/
 }
