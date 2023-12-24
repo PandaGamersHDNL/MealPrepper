@@ -6,12 +6,12 @@ import { IIngredient } from "../../../Interfaces/Ingredient";
 
 export function IngrList(props: { openEdit: (recipe: IIngredient)=> void}) {
     const userCtx = useContext(UserDataCTX)!;
-    console.log("recipe list update");
+    console.log("ingr list update");
     
     const DataManager = userCtx.dataManager;
-    const data = userCtx.userData.Ingredients;
-    const rows = data!.map((item) => (
-        <Table.Tr key={"ri"+ item.id}>
+    const data = userCtx.userData.Ingredients!;
+    const rows = data.map((item) => (
+        <Table.Tr key={"ii"+ item.id}>
             <Table.Td>{item.name}</Table.Td>
 
             <Table.Td>
@@ -25,7 +25,7 @@ export function IngrList(props: { openEdit: (recipe: IIngredient)=> void}) {
                 </Group>
             </Table.Td>
         </Table.Tr>));
-    //Title / cook time? / rating? / 
+    //Title / unit?  
     return (
         <Table>
             <Table.Thead>
