@@ -14,6 +14,7 @@ export function RecipeManager() {
     const [opened, { open, close }] = useDisclosure(false);
     const [editData, setEditData] = useState<IRecipe>(createEmptyRecipe());
     const openEdit = (recipe: IRecipe) => { setEditData(recipe); open(); }
+    //TODO Add filter
     //const [filter, setFilter] = useState("");
     //<TextInput about="search your recipe" onChange={(v) => {setFilter(v.currentTarget.value) }} />
 

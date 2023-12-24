@@ -1,4 +1,4 @@
-import { ActionIcon, Group, rem } from "@mantine/core";
+import { ActionIcon, Group, TextInput, rem } from "@mantine/core";
 import { IngrList } from "./List";
 import { useDisclosure } from "@mantine/hooks";
 import { IngrModal } from "./Modal";
@@ -10,9 +10,10 @@ export function IngrManager() {
     const [opened, { open, close }] = useDisclosure(false);
     const [editData, setEditData] = useState<IIngredient>(createEmptyIngr());
     const openEdit = (recipe: IIngredient) => { setEditData(recipe); open(); }
+    //TODO implement filtering
     //const [filter, setFilter] = useState("");
-    //<TextInput about="search your recipe" onChange={(v) => {setFilter(v.currentTarget.value) }} />
-
+    //<TextInput about="search your ingredient" onChange={(v) => {setFilter(v.currentTarget.value) }} />
+    
     return (
         <div id="Recipes">
             <Group id="RecipeHeader" justify="center">
