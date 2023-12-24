@@ -14,7 +14,7 @@ export class LocalDataService implements IDataService {
     //names of the local storage item
     private static recipeName = "Recipes";
     private static mealName = "Meals";
-    //private static ingrName = "Ingredients";
+    private static ingrName = "Ingredients";
     constructor(private UserData: IUserData) {
         console.log("init local data", Date.now());
 
@@ -136,16 +136,25 @@ export class LocalDataService implements IDataService {
     }
 
     GetIngr(): IIngredient[] {
-        throw new Error("Method not implemented.");
+        return this.UserData.Ingredients!;
     }
-    AddIngr(meals: IIngredient | IIngredient[]): IIngredient[] {
-        throw new Error("Method not implemented.");
+    AddIngr(ingr: IIngredient): IIngredient[] {
+        const res = this.GetIngr();
+        res.push(ingr);
+        this.saveIngredients(res);
+        return res;
     }
-    UpdateIngr(Ingr: IIngredient): IIngredient[] {
-        throw new Error("Method not implemented.");
+    UpdateIngr(ingr: IIngredient): IIngredient[] {
+        const res = this.GetIngr();
+        const oldIndex = res.findIndex(v=> v.id == ingr.id);
+        res[oldIndex] = ingr;
+        this.saveIngredients(res);
+        return res;
     }
     DeleteIngr(id: number): IIngredient[] {
-        throw new Error("Method not implemented.");
+        const res = this.GetIngr().filter(v => v.id != id);
+        this.saveIngredients(res);
+        return res;
     }
 
 
@@ -161,7 +170,7 @@ export class LocalDataService implements IDataService {
         
     }
 
-    /*private saveIngredients(ingre: IIngredient[] = []) {
+    private saveIngredients(ingre: IIngredient[] = []) {
         window.localStorage.setItem(LocalDataService.ingrName, JSON.stringify(ingre));
-    }*/
+    }
 }
