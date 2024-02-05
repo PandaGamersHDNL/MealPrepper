@@ -6,5 +6,6 @@ export class ImportService {
     static ImportJSON(DataManager: IDataService ,jsonStr: string) {
         const jsonData = JSON.parse(jsonStr) as IUserData;
         DataManager.setUserData(jsonData);
+        return jsonData;
     }
 }

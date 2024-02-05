@@ -31,7 +31,7 @@ export class LocalDataService implements IDataService {
         if (!requestList) return this.UserData;
         const data: IUserData = {};
         if (requestList.Ingredients) {
-            this.GetIngr()
+            data.Ingredients = this.GetIngr()
         }
         if (requestList.Meals) {
             data.Meals = this.GetMeals();
@@ -47,7 +47,7 @@ export class LocalDataService implements IDataService {
             localStorage.setItem(key, JSON.stringify(value));
         }
         console.log(data);
-        return true
+        return true;
     }
 
     GetMeals(): IMeal[] {
@@ -55,7 +55,6 @@ export class LocalDataService implements IDataService {
     }
     AddMeals(meal: IMeal | IMeal[]): IMeal[] {
         let res = this.GetMeals();
-        console.log("current", res);
         if (Array.isArray(meal)) {
             meal.map(v => v.id = this.mealId++);
             res = res.concat(meal);
@@ -65,7 +64,6 @@ export class LocalDataService implements IDataService {
             res.push(meal);
         }
         this.saveMeals(res);
-        console.log("after save", res);
 
         return res;
     }
@@ -114,6 +112,7 @@ export class LocalDataService implements IDataService {
     }
     AddIngr(ingr: IIngredient): IIngredient[] {
         const res = this.GetIngr();
+        ingr.id = this.ingrId++;
         res.push(ingr);
         this.saveIngredients(res);
         return res;
@@ -192,12 +191,13 @@ export class LocalDataService implements IDataService {
             this.UserData.Ingredients = JSON.parse(ingrData)
             console.log("parse successfull");
             //find highest id
+            //TODO handle items without id. delete them?
             this.GetIngr().forEach(v => {
                 if (v.id && v.id > this.ingrId) {
                     this.ingrId = v.id;
                 }
             })
-            this.ingrId++;
+            this.ingrId++; //add one for new items
         } catch {
             this.saveIngredients();
         }
