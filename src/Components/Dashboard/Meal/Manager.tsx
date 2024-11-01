@@ -9,8 +9,8 @@ export function MealManager() {
         <>
             <Group>
                 <Button onClick={open}>generate meals</Button>
-                <MealModal opened={opened} Close={close}/>
                 <MealList />
+                <MealModal opened={opened} Close={close}/>
             </Group>
         </>
     )
