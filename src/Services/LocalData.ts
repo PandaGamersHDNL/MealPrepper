@@ -1,5 +1,6 @@
 import { IDataService } from "../Interfaces/DataService";
 import { IImpexList } from "../Interfaces/ImpexList";
+import { IIngredient } from "../Interfaces/Ingredient";
 //import { IIngredient } from "../Interfaces/Ingredient";
 import { IMeal } from "../Interfaces/Meal";
 import { IRecipe } from "../Interfaces/Recipe";
@@ -10,9 +11,11 @@ import { IUserData } from "../Interfaces/UserData";
 export class LocalDataService implements IDataService {
     private recipeId = 0;
     private mealId = 0;
+    private ingredientId = 0;
     //names of the local storage item
     private static recipeName = "Recipes";
     private static mealName = "Meals";
+    private static ingredientName = "Ingredients";
     //private static ingreName = "Ingredients";
     constructor(private UserData: IUserData) {
         console.log("init local data", Date.now());
@@ -48,7 +51,56 @@ export class LocalDataService implements IDataService {
         } catch {
             this.saveRecipes();
         }
+
+        const ingredientData = window.localStorage.getItem(LocalDataService.ingredientName);
+        try {
+            if (!ingredientData) throw Error("no ingredient data");
+            this.UserData.Ingredients = JSON.parse(ingredientData) as IIngredient[];
+            console.log("parse successfull");
+            //find highest id
+            this.UserData.Ingredients!.forEach(v => {
+                if (v.id && v.id > this.ingredientId) {
+                    this.recipeId = v.id;
+                }
+            })
+            this.recipeId++;
+        } catch {
+            this.saveIngredients();
+        }
+
+        //TODO init ingredients
         console.log("finished loading", Date.now());
+    }
+    GetIngredients(): IIngredient[] {
+        return this.UserData.Ingredients || [];
+    }
+    AddIngredients(ingredients: IIngredient | IIngredient[]): IIngredient[] {
+        let res = this.GetIngredients();
+        console.debug("current", res);
+        if(Array.isArray(ingredients)) {
+            ingredients.map(v => v.id = this.ingredientId++);
+            res = res.concat(ingredients);  
+        } else {
+            ingredients.id = this.ingredientId++;
+            res.push(ingredients);
+        }
+        this.saveIngredients(res);
+        console.debug("after save" ,res);
+        
+        return res;
+    }
+    UpdateIngredient(ingredient: IIngredient): IIngredient[] {
+        const res = this.GetIngredients();
+        const oldIndex = res.findIndex(v => ingredient.id == v.id);
+        res[oldIndex] = ingredient;
+        this.saveIngredients(res);
+        return res
+    }
+    DeleteIngredient(id: number): IIngredient[] {
+        console.info("deleting meal", id);
+        const res = this.GetIngredients().filter((v)=> v.id != id);
+        this.saveIngredients(res);
+        return res;
     }
 
     //important for exporting
@@ -56,7 +108,7 @@ export class LocalDataService implements IDataService {
         if(!requestList) return this.UserData;
         const data: IUserData = {};
         if( requestList.Ingredients){
-            //this.GetIngredients()
+            data.Ingredients = this.GetIngredients();
         }
         if( requestList.Meals){
             data.Meals = this.GetMeals();
@@ -80,7 +132,7 @@ export class LocalDataService implements IDataService {
     }
     AddMeals(meal: IMeal | IMeal[]): IMeal[] {
         let res = this.GetMeals();
-        console.log("current", res);
+        console.debug("current", res);
         if(Array.isArray(meal)) {
             meal.map(v => v.id = this.mealId++);
             res = res.concat(meal);
@@ -90,7 +142,7 @@ export class LocalDataService implements IDataService {
             res.push(meal);
         }
         this.saveMeals(res);
-        console.log("after save" ,res);
+        console.debug("after save" ,res);
         
         return res;
     }
@@ -137,16 +189,15 @@ export class LocalDataService implements IDataService {
     private saveRecipes(recipes: IRecipe[] =[]) {
         window.localStorage.setItem(LocalDataService.recipeName, JSON.stringify(recipes));
         console.log("saving recipes", recipes);
-        
     }
 
     private saveMeals(meals: IMeal[] = []) {
         window.localStorage.setItem(LocalDataService.mealName, JSON.stringify(meals));
-        console.log("saving meals");
-        
+        console.log("saving meals");  
     }
 
-    /*private saveIngredients(ingre: IIngredient[] = []) {
-        window.localStorage.setItem(LocalDataService.ingreName, JSON.stringify(ingre));
-    }*/
+    private saveIngredients(ingredients: IIngredient[] = []){
+        window.localStorage.setItem(LocalDataService.ingredientName, JSON.stringify(ingredients));
+        console.log("saving ingredients");
+    }
 }
