@@ -1,10 +1,12 @@
+import { IIngredient } from "./Ingredient"
+
 export interface IRecipe {
     id?: number
     title?: string,
     totalTime?: number,
     prepTime?: number,
     cookTime?: number,
-    ingredients?: string[],
+    ingredients?: IIngredient[],
     steps?: string[],
     description?: string,
     calories?: number,

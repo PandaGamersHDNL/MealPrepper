@@ -9,8 +9,8 @@ export function MealList() {
     const DataManager = userCtx.dataManager;
     const rows = userCtx.userData?.Meals!.map((item) => (
         <Table.Tr key={"mli"+ item.id}>
-            <Table.Td>{item.recipe.title}</Table.Td>
             <Table.Td>{item.date.toLocaleDateString()}</Table.Td>
+            <Table.Td>{item.recipe.title}</Table.Td>
             <Table.Td>
                 <Group gap={0} justify="flex-end">
                     <ActionIcon variant="subtle" color="gray" disabled>
@@ -28,8 +28,8 @@ export function MealList() {
             <Table.Thead>
                 <Table.Tr>
 
-                <Table.Td>Recipe</Table.Td>
                 <Table.Td>Day</Table.Td>
+                <Table.Td>Recipe</Table.Td>
                 </Table.Tr>
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>

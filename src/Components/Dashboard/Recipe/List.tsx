@@ -9,7 +9,7 @@ export function RecipeList(props: { openEdit: (recipe: IRecipe)=> void}) {
     console.log("recipe list update");
     
     const DataManager = userCtx.dataManager;
-    const data = userCtx.userData?.Recipes;
+    const data : IRecipe[] = userCtx.userData?.Recipes || [];
     const rows = data!.map((item) => (
         <Table.Tr key={"ri"+ item.id}>
             <Table.Td>{item.title}</Table.Td>
