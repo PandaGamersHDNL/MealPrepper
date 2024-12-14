@@ -6,7 +6,7 @@ import { UserDataCTX } from "../../../App";
 export function MealList() {
   const userCtx = useContext(UserDataCTX)!;
   const DataManager = userCtx.dataManager;
-  const rows = userCtx.userData.map((item) => (
+  const rows = userCtx.userData.Fridge.map((item) => (
     <Table.Tr key={"mli" + item.id}>
       <Table.Td>{item.recipe.title}</Table.Td>
       <Table.Td>{item.date.toLocaleDateString()}</Table.Td>
