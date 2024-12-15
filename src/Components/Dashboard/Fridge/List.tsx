@@ -1,4 +1,4 @@
-import { ActionIcon, Group, Table, rem } from "@mantine/core";
+/*import { ActionIcon, Group, Table, rem } from "@mantine/core";
 import { IconPencil, IconTrash } from "@tabler/icons-react";
 import { useContext } from "react";
 import { UserDataCTX } from "../../../App";
@@ -46,3 +46,4 @@ export function MealList() {
     </Table>
   );
 }
+*/
