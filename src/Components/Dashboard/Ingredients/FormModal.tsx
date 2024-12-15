@@ -4,7 +4,7 @@ import {
     CreateEmptyIngredient,
     IIngredient,
 } from "../../../Interfaces/Ingredient";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserDataCTX } from "../../../App";
 
 export function IngredientsModal(props: {
@@ -17,6 +17,12 @@ export function IngredientsModal(props: {
     const form = useForm<IIngredient>({
         initialValues: CreateEmptyIngredient(),
     });
+
+    useEffect(() => {
+        form.setValues((v) => { return { ...v, ...props.data } })
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.data]);
 
     return (
         <Modal

@@ -97,7 +97,7 @@ export class LocalDataService implements IDataService {
         return res
     }
     DeleteIngredient(id: number): IIngredient[] {
-        console.info("deleting meal", id);
+        console.info("deleting ingredient", id);
         const res = this.GetIngredients().filter((v)=> v.id != id);
         this.saveIngredients(res);
         return res;

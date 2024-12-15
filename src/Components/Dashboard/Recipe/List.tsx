@@ -7,7 +7,10 @@ import { IRecipe } from "../../../Interfaces/Recipe";
 export function RecipeList(props: { openEdit: (recipe: IRecipe)=> void}) {
     const userCtx = useContext(UserDataCTX)!;
     console.log("recipe list update");
-    
+        // TODO filter by tag
+    // TODO filter by aphabet
+    // TODO filter by stars
+    // TODO filter by calories
     const DataManager = userCtx.dataManager;
     const data : IRecipe[] = userCtx.userData?.Recipes || [];
     const rows = data!.map((item) => (
