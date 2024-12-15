@@ -5,7 +5,6 @@ import { MealList } from "./List";
 
 export function MealManager() {
     const [opened, { open, close }] = useDisclosure(false);
-
     return (
         <>
             <Group>
