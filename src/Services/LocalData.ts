@@ -9,6 +9,7 @@ import { IUserData } from "../Interfaces/UserData";
 //TODO Make sure every function returns the new state of the items
 //TODO verify everything works like it should
 export class LocalDataService implements IDataService {
+    //Next id
     private recipeId = 0;
     private mealId = 0;
     private ingredientId = 0;
@@ -32,7 +33,7 @@ export class LocalDataService implements IDataService {
                 }
                 v.date = new Date(v.date)
             })
-            this.recipeId++;
+            this.mealId++;
         } catch {
             this.saveMeals();
         }
@@ -60,10 +61,10 @@ export class LocalDataService implements IDataService {
             //find highest id
             this.UserData.Ingredients!.forEach(v => {
                 if (v.id && v.id > this.ingredientId) {
-                    this.recipeId = v.id;
+                    this.ingredientId = v.id;
                 }
             })
-            this.recipeId++;
+            this.ingredientId++;
         } catch {
             this.saveIngredients();
         }
