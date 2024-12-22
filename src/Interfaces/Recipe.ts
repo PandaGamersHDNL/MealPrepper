@@ -1,4 +1,4 @@
-import { IIngredient, IIngredientValue } from "./Ingredient"
+import { IIngredientValue } from "./Ingredient"
 
 export interface IRecipe {
     id?: number

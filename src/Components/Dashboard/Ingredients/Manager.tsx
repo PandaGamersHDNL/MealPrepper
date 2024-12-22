@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Group, rem } from "@mantine/core";
+import { ActionIcon, Group, rem } from "@mantine/core";
 import { IngredientList } from "./List";
 import { IngredientsModal } from "./FormModal";
 import { useDisclosure } from "@mantine/hooks";
