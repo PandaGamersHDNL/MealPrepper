@@ -5,6 +5,12 @@ export interface IIngredient {
     //TODO add tags
 }
 
+export interface IIngredientValue
+{
+    IngredientId: number
+    value: number
+}
+
 export function CreateEmptyIngredient(): IIngredient {
     return {name: "", messure: "g"}
 }

@@ -1,4 +1,4 @@
-import { IIngredient } from "./Ingredient"
+import { IIngredient, IIngredientValue } from "./Ingredient"
 
 export interface IRecipe {
     id?: number
@@ -6,7 +6,7 @@ export interface IRecipe {
     totalTime?: number,
     prepTime?: number,
     cookTime?: number,
-    ingredients?: IIngredient[],
+    ingredients?: IIngredientValue[],
     steps?: string[],
     description?: string,
     calories?: number,
