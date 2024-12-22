@@ -1,7 +1,7 @@
 export interface IIngredient {
     id?: number,
     name: string,
-    messure: string //$ or g or kg ...
+    messure: string //st or g or kg ...
     //TODO add tags
 }
 

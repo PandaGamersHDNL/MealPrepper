@@ -9,6 +9,8 @@ import {
     Rating,
     Select,
     ComboboxItem,
+    Title,
+    Stack,
 } from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { IRecipe, createEmptyRecipe } from "../../../Interfaces/Recipe";
@@ -33,15 +35,26 @@ export function RecipeFormModal(props: {
     }, [props.data]);
     const ingredients: ComboboxItem[] =
         globalData.Ingredients!.map<ComboboxItem>((v) => {
-            return { value: v.id!.toString(), label: v.name + " (" + v.messure + ")" } as ComboboxItem;
+            return {
+                value: v.id!.toString(),
+                label: v.name + " (" + v.messure + ")",
+            } as ComboboxItem;
         }) || [];
-    const ingredientsValues = form.values.ingredients?.map<JSX.Element>((v, i) => {
-
-        const ingr = globalData.Ingredients!.find((filter) => filter.id == v.IngredientId );
-        if(!ingr) return<></>;
-        return <NumberInput suffix={" " + ingr.messure} label={ingr.name} {...form.getInputProps(`ingredients.${i}.value`)} />
-     }
-     );
+    const ingredientsValues = form.values.ingredients?.map<JSX.Element>(
+        (v, i) => {
+            const ingr = globalData.Ingredients!.find(
+                (filter) => filter.id == v.IngredientId
+            );
+            if (!ingr) return <></>;
+            return (
+                <NumberInput
+                    suffix={" " + ingr.messure}
+                    label={ingr.name}
+                    {...form.getInputProps(`ingredients.${i}.value`)}
+                />
+            );
+        }
+    );
     return (
         <Modal
             onClose={props.close}
@@ -81,27 +94,26 @@ export function RecipeFormModal(props: {
                     {...form.getInputProps("calories")}
                 />
                 <Rating fractions={2} {...form.getInputProps("rating")} />
-                <Group justify="center" mt="xl" title="Ingredients">
-                    <InputLabel> Ingredients</InputLabel>
+                <Stack align="center" mt="xl" title="Ingredients">
+                    <Title size="h1"> Ingredients</Title>
                     {ingredientsValues}
-                    <br />
                     <Select
                         data={ingredients}
                         searchable
                         onChange={(v) => {
                             if (!v) return;
-                            form.insertListItem("ingredients", {IngredientId: Number.parseInt(v), value: 100 });
+                            form.insertListItem("ingredients", {
+                                IngredientId: Number.parseInt(v),
+                                value: 100,
+                            });
                             console.log("selected", form.getValues());
-
                         }}
+                        nothingFoundMessage={
+                            <Button>Add new ingredient</Button>
+                        }
                     ></Select>
-                    <Button
-                        onClick={() => form.insertListItem("ingredients", "")}
-                    >
-                        Add Ingredient
-                    </Button>
-                </Group>
-                <Group justify="center" mt="xl" title="Steps">
+                </Stack>
+                <Stack align="center" mt="xl" title="Steps">
                     <InputLabel> Steps</InputLabel>
                     {form.values.steps?.map((_, i) => (
                         <TextInput {...form.getInputProps(`steps.${i}`)} />
@@ -110,7 +122,7 @@ export function RecipeFormModal(props: {
                     <Button onClick={() => form.insertListItem("steps", "")}>
                         Add step
                     </Button>
-                </Group>
+                </Stack>
                 <Group justify="center" mt="xl">
                     <Button
                         onClick={() => {
