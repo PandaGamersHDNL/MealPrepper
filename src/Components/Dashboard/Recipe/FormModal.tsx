@@ -38,7 +38,7 @@ export function RecipeFormModal(props: {
     }, [props.data]);
     const ingredients: ComboboxStringItem[] =
         globalData.Ingredients!.map((v) => {
-            return {value: v.name };
+            return { value: v.name };
         }) || [];
     const ingredientsValues = form.values.ingredients?.map<JSX.Element>(
         (v, i) => {
@@ -98,21 +98,26 @@ export function RecipeFormModal(props: {
                     <Title size="h1"> Ingredients</Title>
                     <TagsInput
                         data={ingredients}
-                        onOptionSubmit={(v)=> {
-                            if(v == "")
-                                return;
+                        onOptionSubmit={(v) => {
+                            if (v == "") return;
                             form.insertListItem("ingredients", {
-                                    IngredientId: DataManager.GetIngredients().find( i => i.name == v)?.id,
-                                    value: 100,
-                                });
-                            console.log("on option submit", v)
+                                IngredientId: DataManager.GetIngredients().find(
+                                    (i) => i.name == v
+                                )?.id,
+                                value: 100,
+                            });
+                            console.log("on option submit", v);
                         }}
-                        onRemove={(v) => {console.log("removed", v);
-                            const id = DataManager.GetIngredients().find( i => i.name == v)!.id!;
-                            const index = form.values.ingredients!.findIndex(i => i.IngredientId == id);
+                        onRemove={(v) => {
+                            console.log("removed", v);
+                            const id = DataManager.GetIngredients().find(
+                                (i) => i.name == v
+                            )!.id!;
+                            const index = form.values.ingredients!.findIndex(
+                                (i) => i.IngredientId == id
+                            );
                             form.removeListItem("ingredients", index);
                         }}
-                        
                     ></TagsInput>
                     {ingredientsValues}
                 </Stack>
