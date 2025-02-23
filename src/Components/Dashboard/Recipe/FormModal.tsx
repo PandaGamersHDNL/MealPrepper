@@ -7,15 +7,17 @@ import {
     InputLabel,
     NumberInput,
     Rating,
-    Select,
-    ComboboxItem,
     Title,
     Stack,
+    TagsInput,
+    ComboboxStringItem,
 } from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { IRecipe, createEmptyRecipe } from "../../../Interfaces/Recipe";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserDataCTX } from "../../../App";
+import { IngredientsModal } from "../Ingredients/FormModal";
+import { CreateEmptyIngredient } from "../../../Interfaces/Ingredient";
 
 export function RecipeFormModal(props: {
     data: IRecipe;
@@ -25,6 +27,7 @@ export function RecipeFormModal(props: {
     const form = useForm<IRecipe>({ initialValues: createEmptyRecipe() });
     const DataManager = useContext(UserDataCTX)!.dataManager;
     const globalData = useContext(UserDataCTX)!.userData;
+    const [ingrOpened, setIngrOpened] = useState<boolean>(false);
     //console.log("test modal change", props.data)
     useEffect(() => {
         form.setValues((v) => {
@@ -33,12 +36,9 @@ export function RecipeFormModal(props: {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.data]);
-    const ingredients: ComboboxItem[] =
-        globalData.Ingredients!.map<ComboboxItem>((v) => {
-            return {
-                value: v.id!.toString(),
-                label: v.name + " (" + v.messure + ")",
-            } as ComboboxItem;
+    const ingredients: ComboboxStringItem[] =
+        globalData.Ingredients!.map((v) => {
+            return {value: v.name };
         }) || [];
     const ingredientsValues = form.values.ingredients?.map<JSX.Element>(
         (v, i) => {
@@ -96,22 +96,25 @@ export function RecipeFormModal(props: {
                 <Rating fractions={2} {...form.getInputProps("rating")} />
                 <Stack align="center" mt="xl" title="Ingredients">
                     <Title size="h1"> Ingredients</Title>
-                    {ingredientsValues}
-                    <Select
+                    <TagsInput
                         data={ingredients}
-                        searchable
-                        onChange={(v) => {
-                            if (!v) return;
+                        onOptionSubmit={(v)=> {
+                            if(v == "")
+                                return;
                             form.insertListItem("ingredients", {
-                                IngredientId: Number.parseInt(v),
-                                value: 100,
-                            });
-                            console.log("selected", form.getValues());
+                                    IngredientId: DataManager.GetIngredients().find( i => i.name == v)?.id,
+                                    value: 100,
+                                });
+                            console.log("on option submit", v)
                         }}
-                        nothingFoundMessage={
-                            <Button>Add new ingredient</Button>
-                        }
-                    ></Select>
+                        onRemove={(v) => {console.log("removed", v);
+                            const id = DataManager.GetIngredients().find( i => i.name == v)!.id!;
+                            const index = form.values.ingredients!.findIndex(i => i.IngredientId == id);
+                            form.removeListItem("ingredients", index);
+                        }}
+                        
+                    ></TagsInput>
+                    {ingredientsValues}
                 </Stack>
                 <Stack align="center" mt="xl" title="Steps">
                     <InputLabel> Steps</InputLabel>
@@ -137,6 +140,13 @@ export function RecipeFormModal(props: {
                     </Button>
                 </Group>
             </Form>
+            <IngredientsModal
+                close={() => {
+                    setIngrOpened(false);
+                }}
+                opened={ingrOpened}
+                data={{ ...CreateEmptyIngredient() }}
+            />
         </Modal>
     );
 }

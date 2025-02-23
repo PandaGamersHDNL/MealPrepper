@@ -20,7 +20,8 @@ export function IngredientsModal(props: {
 
     useEffect(() => {
         form.setValues((v) => { return { ...v, ...props.data } })
-
+        console.log("setting new ingredient modal data", props.data);
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.data]);
 
