@@ -52,7 +52,7 @@ export function RecipeFormModal(props: {
                     label={ingr.name}
                     {...form.getInputProps(`ingredients.${i}.value`)}
                 />
-            );
+            );//TODO add indication of optional ingredients 
         }
     );
     return (
@@ -100,10 +100,15 @@ export function RecipeFormModal(props: {
                         data={ingredients}
                         onOptionSubmit={(v) => {
                             if (v == "") return;
+                            const id = DataManager.GetIngredients()!.find(
+                                (i) => i.name == v
+                            )?.id || -1; 
+                            if(id < 0)
+                            {
+                                return;
+                            }
                             form.insertListItem("ingredients", {
-                                IngredientId: DataManager.GetIngredients().find(
-                                    (i) => i.name == v
-                                )?.id,
+                                IngredientId: id,
                                 value: 100,
                             });
                             console.log("on option submit", v);
@@ -148,6 +153,7 @@ export function RecipeFormModal(props: {
             <IngredientsModal
                 close={() => {
                     setIngrOpened(false);
+                    //TODO find a way to get if there is a new ingredients if yes set last item as ingredient
                 }}
                 opened={ingrOpened}
                 data={{ ...CreateEmptyIngredient() }}
