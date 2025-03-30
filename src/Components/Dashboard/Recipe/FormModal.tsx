@@ -17,7 +17,10 @@ import { IRecipe, createEmptyRecipe } from "../../../Interfaces/Recipe";
 import { useContext, useEffect, useState } from "react";
 import { UserDataCTX } from "../../../App";
 import { IngredientsModal } from "../Ingredients/FormModal";
-import { CreateEmptyIngredient } from "../../../Interfaces/Ingredient";
+import {
+    CreateEmptyIngredient,
+    IIngredient,
+} from "../../../Interfaces/Ingredient";
 
 export function RecipeFormModal(props: {
     data: IRecipe;
@@ -40,19 +43,23 @@ export function RecipeFormModal(props: {
         globalData.Ingredients!.map((v) => {
             return { value: v.name };
         }) || [];
-    const ingredientsValues = form.values.ingredients?.map<JSX.Element>(
+    console.log(form.values.ingredients);
+    
+    const ingredientsValues = form.values.ingredients!.map<JSX.Element>(
         (v, i) => {
             const ingr = globalData.Ingredients!.find(
                 (filter) => filter.id == v.IngredientId
             );
+            console.log("ingredient " + ingr);
             if (!ingr) return <></>;
             return (
                 <NumberInput
                     suffix={" " + ingr.messure}
                     label={ingr.name}
+                    id={"RecipeIng" + i + ingr.id}
                     {...form.getInputProps(`ingredients.${i}.value`)}
                 />
-            );//TODO add indication of optional ingredients 
+            ); //TODO add indication of optional ingredients
         }
     );
     return (
@@ -100,11 +107,13 @@ export function RecipeFormModal(props: {
                         data={ingredients}
                         onOptionSubmit={(v) => {
                             if (v == "") return;
-                            const id = DataManager.GetIngredients()!.find(
-                                (i) => i.name == v
-                            )?.id || -1; 
-                            if(id < 0)
-                            {
+                            const id =
+                            DataManager.GetIngredients()!.find(
+                                (i) => i.name  == v
+                            )?.id || -1;
+                            console.log("added ingr", id);
+                            if (id < 0) {
+                                setIngrOpened(true);
                                 return;
                             }
                             form.insertListItem("ingredients", {
@@ -123,6 +132,7 @@ export function RecipeFormModal(props: {
                             );
                             form.removeListItem("ingredients", index);
                         }}
+                        value={form.values.ingredients?.flatMap((v) => globalData.Ingredients?.find(filter => filter.id == v.IngredientId)?.name || [])}
                     ></TagsInput>
                     {ingredientsValues}
                 </Stack>
@@ -151,8 +161,14 @@ export function RecipeFormModal(props: {
                 </Group>
             </Form>
             <IngredientsModal
-                close={() => {
+                close={(newIng?: IIngredient) => {
                     setIngrOpened(false);
+                    if(!newIng || !newIng.id)
+                        return;
+                    form.insertListItem("ingredients", {
+                        IngredientId: newIng?.id,
+                        value: 100,
+                    });
                     //TODO find a way to get if there is a new ingredients if yes set last item as ingredient
                 }}
                 opened={ingrOpened}

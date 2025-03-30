@@ -8,7 +8,7 @@ import { useContext, useEffect } from "react";
 import { UserDataCTX } from "../../../App";
 
 export function IngredientsModal(props: {
-    close: () => void;
+    close: (newIng?: IIngredient) => void;
     opened: boolean;
     data: IIngredient;
 }) {
@@ -36,28 +36,31 @@ export function IngredientsModal(props: {
                 form={form}
                 onSubmit={(value) => {
                     console.log(value);
+                    let updated :IIngredient[] | undefined = undefined;
                     if (props.data?.id) {
                         DataManager.UpdateIngredient(value);
                     } else {
-                        DataManager.AddIngredients(value);
+                        updated = DataManager.AddIngredients(value);
                     }
                     form.setValues(CreateEmptyIngredient());
                     if(!bAddAndNew)
                     {
-                        props.close();
+                        const onclose = updated![updated!.length-1] || undefined
+                        props.close(onclose);
                     }
                 }}
                 onReset={() =>{
                     form.setValues(CreateEmptyIngredient());
                 }}
+                
             >
                 <TextInput label="Name" {...form.getInputProps("name")} />
                 <TextInput label="Messure" {...form.getInputProps("messure")} />
                 <Group>
                     <Button type="reset">Reset</Button>
                     <Button onClick={()=>props.close()}>Cancel</Button>
-                    <Button type="submit" onClick={()=> bAddAndNew = false}>Add</Button>
-                    <Button type="submit" onClick={()=> bAddAndNew = true}>Add & New</Button>
+                    <Button type="submit" onClick={()=> bAddAndNew = false}>{props.data.id ? "Save" : "Add"}</Button>
+                    <Button type="submit" onClick={()=> bAddAndNew = true}>{props.data.id ? "Save" : "New"}</Button>
                 </Group>
             </Form>
         </Modal>
