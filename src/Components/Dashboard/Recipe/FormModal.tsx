@@ -34,7 +34,7 @@ export function RecipeFormModal(props: {
     const [newIngrName, setNewIngrName] = useState<string>("");
     //console.log("test modal change", props.data)
     useEffect(() => {
-        form.setValues((v) => {
+        form.setValues((v: IRecipe) => {
             return { ...v, ...props.data };
         });
 

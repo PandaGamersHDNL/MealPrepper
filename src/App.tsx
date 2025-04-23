@@ -7,6 +7,7 @@ import { IUserData } from './Interfaces/UserData';
 import { IDataService } from './Interfaces/DataService';
 import { LocalDataService } from './Services/LocalData';
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const UserDataCTX = createContext<{ 
     userData: IUserData; 
     dataManager: IDataService; 
