@@ -1,8 +1,8 @@
 import { IImpexList } from "./ImpexList";
+import { IIngredient } from "./Ingredient";
 import { IMeal } from "./Meal";
 import { IRecipe } from "./Recipe";
 import { IUserData } from "./UserData";
-import { ITag } from "./Tag";
 //import { IUserSettings } from "./UserSettings";
 
 //LATER make promises for database access
@@ -21,6 +21,11 @@ export interface IDataService {
   UpdateMeal(meal: IMeal): IMeal[];
   DeleteMeal(id: number): IMeal[];
 
+  GetIngredients(): IIngredient[];
+  AddIngredients(ingredients: IIngredient | IIngredient[]): IIngredient[];
+  UpdateIngredient(ingredient: IIngredient): IIngredient[];
+  DeleteIngredient(id: number): IIngredient[];
+/*
   GetFridge(): IIngredient[];
   AddFridge(value: IIngredient);
   UpdateFridge(value: IIngredient);
@@ -28,7 +33,7 @@ export interface IDataService {
 
   GetTags(): ITag;
   AddTag(value: ITag);
-  DelTag(id: number);
+  DelTag(id: number);*/
   //GetUserSettings(): IUserSettings,
   //UpdateUserSettings(userSettings: IUserSettings): boolean
 }
