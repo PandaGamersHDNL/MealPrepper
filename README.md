@@ -3,6 +3,11 @@ React app that let's you have recipes stored that then will be able to generate 
 
 TODO steps create a gen component (settings for the gen of meals, includes start date, end date and/or amount of days, allowed tags (all of them or at least one of them LATER), exclusion length (the amount of days you won't allow the same recipe))
 
+# Demo
+[demo website](https://pandagamershdnl.github.io/MealPrepper/)
+
+this might change and break depending on the version used
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
