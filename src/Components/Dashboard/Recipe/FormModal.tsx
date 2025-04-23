@@ -31,6 +31,7 @@ export function RecipeFormModal(props: {
     const DataManager = useContext(UserDataCTX)!.dataManager;
     const globalData = useContext(UserDataCTX)!.userData;
     const [ingrOpened, setIngrOpened] = useState<boolean>(false);
+    const [newIngrName, setNewIngrName] = useState<string>("");
     //console.log("test modal change", props.data)
     useEffect(() => {
         form.setValues((v) => {
@@ -113,6 +114,7 @@ export function RecipeFormModal(props: {
                             )?.id || -1;
                             console.log("added ingr", id);
                             if (id < 0) {
+                                setNewIngrName(v);
                                 setIngrOpened(true);
                                 return;
                             }
@@ -169,10 +171,10 @@ export function RecipeFormModal(props: {
                         IngredientId: newIng?.id,
                         value: 100,
                     });
-                    //TODO find a way to get if there is a new ingredients if yes set last item as ingredient
+                    //TODO either disable add + new or make it able to be added as a tag
                 }}
                 opened={ingrOpened}
-                data={{ ...CreateEmptyIngredient() }}
+                data={{ ...CreateEmptyIngredient(), name: newIngrName }}
             />
         </Modal>
     );
