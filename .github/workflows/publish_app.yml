@@ -36,5 +36,5 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@vX.X.X # or the latest "vX.X.X" version tag for this action
+        uses: actions/deploy-pages@v4.0.5 # or the latest "vX.X.X" version tag for this action
     
