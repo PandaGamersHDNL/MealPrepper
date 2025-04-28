@@ -8,7 +8,7 @@ import { useContext, useEffect } from "react";
 import { UserDataCTX } from "../../../App";
 
 export function IngredientsModal(props: {
-    close: (newIng?: IIngredient) => void;
+    close: (addMore: boolean, newIng?: IIngredient) => void;
     opened: boolean;
     data: IIngredient;
 }) {
@@ -27,7 +27,7 @@ export function IngredientsModal(props: {
 
     return (
         <Modal
-            onClose={props.close}
+            onClose={()=> props.close(false, undefined)}
             opened={props.opened}
             centered
             title={"Ingredient"}
@@ -43,13 +43,11 @@ export function IngredientsModal(props: {
                         updated = DataManager.AddIngredients(value);
                     }
                     form.setValues(CreateEmptyIngredient());
-                    if(!bAddAndNew)
-                    {
-                        const onclose = updated![updated!.length-1] || undefined
-                        props.close(onclose);
-                    }
+                    const onclose = updated![updated!.length-1] || undefined
+                    props.close(bAddAndNew, onclose);
                 }}
                 onReset={() =>{
+                    
                     form.setValues(CreateEmptyIngredient());
                 }}
                 
@@ -58,9 +56,9 @@ export function IngredientsModal(props: {
                 <TextInput label="Messure" {...form.getInputProps("messure")} />
                 <Group>
                     <Button type="reset">Reset</Button>
-                    <Button onClick={()=>props.close()}>Cancel</Button>
+                    <Button onClick={()=>props.close(false, undefined)}>Cancel</Button>
                     <Button type="submit" onClick={()=> bAddAndNew = false}>{props.data.id ? "Save" : "Add"}</Button>
-                    <Button type="submit" onClick={()=> bAddAndNew = true}>{props.data.id ? "Save" : "New"}</Button>
+                    <Button type="submit" onClick={()=> bAddAndNew = true}>{props.data.id ? "Save + New" : "Add + New"}</Button>
                 </Group>
             </Form>
         </Modal>

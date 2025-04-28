@@ -163,15 +163,16 @@ export function RecipeFormModal(props: {
                 </Group>
             </Form>
             <IngredientsModal
-                close={(newIng?: IIngredient) => {
-                    setIngrOpened(false);
+                close={(moreIngr: boolean, newIng?: IIngredient) => {
+                    if(!moreIngr)
+                        setIngrOpened(false);
+                    setNewIngrName("");
                     if(!newIng || !newIng.id)
                         return;
                     form.insertListItem("ingredients", {
                         IngredientId: newIng?.id,
                         value: 100,
                     });
-                    //TODO either disable add + new or make it able to be added as a tag
                 }}
                 opened={ingrOpened}
                 data={{ ...CreateEmptyIngredient(), name: newIngrName }}
