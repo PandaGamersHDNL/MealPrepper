@@ -1,4 +1,4 @@
-import { ActionIcon, Group, rem } from "@mantine/core";
+import { ActionIcon, Button, Group, rem, Stack } from "@mantine/core";
 import { IngredientList } from "./List";
 import { IngredientsModal } from "./FormModal";
 import { useDisclosure } from "@mantine/hooks";
@@ -18,22 +18,19 @@ export function IngredientsManager() {
         setEditData(ingredient);
         open();
     };
+    //make add button always visible when scrolling
     return (
-        <Group>
-            <Group id="IngredientHeader" justify="center">
-                <ActionIcon
-                    variant="subtle"
-                    color="red"
+        <Stack id="Recipes">
+            <Group id="IngredientsHeader" justify="center" grow={true} >
+                <Button
+                    justify="center"
                     onClick={() => openEdit(CreateEmptyIngredient())}
                 >
-                    <IconPlus
-                        style={{ width: rem(16), height: rem(16) }}
-                        stroke={1.5}
-                    />
-                </ActionIcon>
+                    <IconPlus />
+                </Button>
             </Group>
             <IngredientList openEdit={openEdit} />
             <IngredientsModal close={close} opened={opened} data={editData} />
-        </Group>
+        </Stack>
     );
 }
