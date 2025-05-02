@@ -18,7 +18,7 @@ export function IngredientsManager() {
         setEditData(ingredient);
         open();
     };
-    //make add button always visible when scrolling
+    //TODO make add button always visible when scrolling
     return (
         <Stack id="Recipes">
             <Group id="IngredientsHeader" justify="center" grow={true} >

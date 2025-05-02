@@ -7,10 +7,12 @@ export function MealList() {
     const userCtx = useContext(UserDataCTX)!;
     console.log("meal list update")
     const DataManager = userCtx.dataManager;
-    const rows = userCtx.userData?.Meals!.map((item) => (
-        <Table.Tr key={"mli"+ item.id}>
+    const rows = DataManager.GetMeals().map((item) => {
+        const recipe =  DataManager.GetRecipes().find((v) => v.id == item.recipeId);
+        if(!recipe) return;
+        return(<Table.Tr key={"mli"+ item.id}>
             <Table.Td>{item.date.toLocaleDateString()}</Table.Td>
-            <Table.Td>{item.recipe.title}</Table.Td>
+            <Table.Td>{recipe.title}</Table.Td>
             <Table.Td>
                 <Group gap={0} justify="flex-end">
                     <ActionIcon variant="subtle" color="gray" disabled>
@@ -21,7 +23,7 @@ export function MealList() {
                     </ActionIcon>
                 </Group>
             </Table.Td>
-        </Table.Tr>));
+        </Table.Tr>);});
     //Title / cook time? / rating? / 
     return (
         <Table>

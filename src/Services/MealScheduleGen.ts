@@ -15,7 +15,7 @@ export class MealScheduleGenService {
         for (let i = 0; i < days; i++) {
             const recipe = recipes[this.RandomInt(recipes.length)];
             const dateOfMeal = this.AddDays(new Date(date), i);
-            genMeals.push({date: dateOfMeal, recipe })
+            genMeals.push({date: dateOfMeal, recipeId: recipe.id! })
         }
         return DataManager.AddMeals(genMeals);
     }

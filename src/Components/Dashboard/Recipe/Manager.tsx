@@ -19,7 +19,7 @@ export function RecipeManager() {
     };
     //const [filter, setFilter] = useState("");
     //<TextInput about="search your recipe" onChange={(v) => {setFilter(v.currentTarget.value) }} />
-    //make add button always visible when scrolling
+    //TODO make add button always visible when scrolling
     return (
         <Stack id="Recipes">
             <Group id="RecipeHeader" justify="center" grow={true}>
