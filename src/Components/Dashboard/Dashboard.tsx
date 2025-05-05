@@ -6,15 +6,16 @@ import { MealManager } from "./Meal/Manager";
 import { RecipeManager } from "./Recipe/Manager";
 
 export function Dashboard() {
-    return (
-        <Group justify="center" align="flex-start" grow={true}>
-            <Stack>
+    return (<>
+            <Group justify="center">
                 <ExportButton />
                 <ImportButton />
-            </Stack>
+            </Group>
+        <Group justify="center" align="flex-start" grow={true}>
             <MealManager />
             <RecipeManager />
             <IngredientsManager />
         </Group>
+    </>
     );
 }

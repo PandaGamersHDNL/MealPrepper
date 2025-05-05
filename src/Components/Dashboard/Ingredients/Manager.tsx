@@ -1,16 +1,17 @@
-import { ActionIcon, Button, Group, rem, Stack } from "@mantine/core";
+import { ActionIcon, Button, Group, rem, Stack, TextInput } from "@mantine/core";
 import { IngredientList } from "./List";
 import { IngredientsModal } from "./FormModal";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useInputState } from "@mantine/hooks";
 import {
     CreateEmptyIngredient,
     IIngredient,
 } from "../../../Interfaces/Ingredient";
 import { useState } from "react";
-import { IconPlus } from "@tabler/icons-react";
+import { IconPlus, IconSearch } from "@tabler/icons-react";
 
 export function IngredientsManager() {
     const [opened, { open, close }] = useDisclosure(false);
+    const [search, setSearch] = useInputState<string>("");
     const [editData, setEditData] = useState<IIngredient>(
         CreateEmptyIngredient()
     );
@@ -20,7 +21,7 @@ export function IngredientsManager() {
     };
     //TODO make add button always visible when scrolling
     return (
-        <Stack id="Recipes">
+        <Stack id="Recipes" >
             <Group id="IngredientsHeader" justify="center" grow={true} >
                 <Button
                     justify="center"
@@ -28,8 +29,9 @@ export function IngredientsManager() {
                 >
                     <IconPlus />
                 </Button>
+                <TextInput  title="search" rightSection={<IconSearch />} onChange={(v) => setSearch(v)}/>
             </Group>
-            <IngredientList openEdit={openEdit} />
+            <IngredientList openEdit={openEdit} filter={search}/>
             <IngredientsModal close={close} opened={opened} data={editData} />
         </Stack>
     );
