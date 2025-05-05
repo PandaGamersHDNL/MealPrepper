@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { UserDataCTX } from "../../../App";
 import { IRecipe } from "../../../Interfaces/Recipe";
 
-export function RecipeList(props: { openEdit: (recipe: IRecipe)=> void}) {
+export function RecipeList(props: { openEdit: (recipe: IRecipe)=> void, filter: string}) {
     const userCtx = useContext(UserDataCTX)!;
     console.log("recipe list update");
         // TODO filter by tag
@@ -13,12 +13,13 @@ export function RecipeList(props: { openEdit: (recipe: IRecipe)=> void}) {
     // TODO filter by calories
     const DataManager = userCtx.dataManager;
     const data : IRecipe[] = userCtx.userData?.Recipes || [];
-    const rows = data!.map((item) => (
+    const rows = data!.filter((v) => v.title?.toUpperCase().includes(props.filter.toUpperCase()))
+                      .map((item) => (
         <Table.Tr key={"ri"+ item.id}>
             <Table.Td>{item.title}</Table.Td>
 
             <Table.Td>
-                <Group gap={0} justify="flex-end">
+                <Group justify="flex-end">
                     <ActionIcon variant="subtle" color="gray" onClick={()=> props.openEdit(item)}>
                         <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                     </ActionIcon>

@@ -1,17 +1,19 @@
-import { Button, Group } from "@mantine/core";
+import { Button, Group, Stack } from "@mantine/core";
 import { MealModal } from "./Modal";
 import { useDisclosure } from "@mantine/hooks";
 import { MealList } from "./List";
+import { GroceryListManager } from "../GroceryList/Manager";
 
 export function MealManager() {
     const [opened, { open, close }] = useDisclosure(false);
     return (
-        <>
-            <Group>
+        <Stack >
+            <Group grow={true}>
                 <Button onClick={open}>generate meals</Button>
-                <MealList />
-                <MealModal opened={opened} Close={close}/>
+                <GroceryListManager />
             </Group>
-        </>
-    )
+            <MealList />
+            <MealModal opened={opened} Close={close} />
+        </Stack>
+    );
 }

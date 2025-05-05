@@ -5,7 +5,7 @@ import { UserDataCTX } from "../../../App";
 import { IIngredient } from "../../../Interfaces/Ingredient";
 
 export function IngredientList(props: {
-    openEdit: (recipe: IIngredient) => void;
+    openEdit: (recipe: IIngredient) => void, filter: string
 }) {
     const userCtx = useContext(UserDataCTX)!;
     console.log("recipe list update");
@@ -14,7 +14,7 @@ export function IngredientList(props: {
     const DataManager = userCtx.dataManager;
     const data: IIngredient[] = userCtx.userData?.Ingredients || [];
 
-    const rows = data!.map((item) => (
+    const rows = data!.filter((v) => v.name.toUpperCase().includes(props.filter.toUpperCase())).map((item) => (
         <Table.Tr key={"ii" + item.id}>
             <Table.Td>{item.name}</Table.Td>
 
