@@ -1,4 +1,4 @@
-import { Group, Stack } from "@mantine/core";
+import { Group } from "@mantine/core";
 import { ExportButton } from "./Export";
 import { ImportButton } from "./Import";
 import { IngredientsManager } from "./Ingredients/Manager";
