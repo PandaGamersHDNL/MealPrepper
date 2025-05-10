@@ -7,7 +7,8 @@ export function MealList() {
     const userCtx = useContext(UserDataCTX)!;
     console.log("meal list update")
     const DataManager = userCtx.dataManager;
-    const rows = DataManager.GetMeals().map((item) => {
+    const rows = DataManager.GetMeals().sort((a, b) => (a.date.valueOf() - b.date.valueOf()))
+        .map((item) => {
         const recipe =  DataManager.GetRecipes().find((v) => v.id == item.recipeId);
         if(!recipe) return;
         return(<Table.Tr key={"mli"+ item.id}>

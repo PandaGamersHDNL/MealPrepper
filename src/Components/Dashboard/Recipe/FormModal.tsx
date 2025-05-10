@@ -11,6 +11,8 @@ import {
     Stack,
     TagsInput,
     ComboboxStringItem,
+    ActionIcon,
+    rem,
 } from "@mantine/core";
 import { Form, useForm } from "@mantine/form";
 import { IRecipe, createEmptyRecipe } from "../../../Interfaces/Recipe";
@@ -21,6 +23,7 @@ import {
     CreateEmptyIngredient,
     IIngredient,
 } from "../../../Interfaces/Ingredient";
+import { IconTrash } from "@tabler/icons-react";
 
 export function RecipeFormModal(props: {
     data: IRecipe;
@@ -45,7 +48,7 @@ export function RecipeFormModal(props: {
             return { value: v.name };
         }) || [];
     console.log(form.values.ingredients);
-    
+
     const ingredientsValues = form.values.ingredients!.map<JSX.Element>(
         (v, i) => {
             const ingr = globalData.Ingredients!.find(
@@ -54,12 +57,14 @@ export function RecipeFormModal(props: {
             console.log("ingredient " + ingr);
             if (!ingr) return <></>;
             return (
-                <NumberInput
-                    suffix={" " + ingr.messure}
-                    label={ingr.name}
-                    id={"RecipeIng" + i + ingr.id}
-                    {...form.getInputProps(`ingredients.${i}.value`)}
-                />
+                <Group>
+                    <NumberInput
+                        suffix={" " + ingr.messure}
+                        label={ingr.name}
+                        id={"RecipeIng" + i + ingr.id}
+                        {...form.getInputProps(`ingredients.${i}.value`)}
+                    />
+                </Group>
             ); //TODO add indication of optional ingredients
         }
     );
@@ -109,9 +114,9 @@ export function RecipeFormModal(props: {
                         onOptionSubmit={(v) => {
                             if (v == "") return;
                             const id =
-                            DataManager.GetIngredients()!.find(
-                                (i) => i.name  == v
-                            )?.id || -1;
+                                DataManager.GetIngredients()!.find(
+                                    (i) => i.name == v
+                                )?.id || -1;
                             console.log("added ingr", id);
                             if (id < 0) {
                                 setNewIngrName(v);
@@ -134,14 +139,27 @@ export function RecipeFormModal(props: {
                             );
                             form.removeListItem("ingredients", index);
                         }}
-                        value={form.values.ingredients?.flatMap((v) => globalData.Ingredients?.find(filter => filter.id == v.IngredientId)?.name || [])}
+                        value={form.values.ingredients?.flatMap(
+                            (v) =>
+                                globalData.Ingredients?.find(
+                                    (filter) => filter.id == v.IngredientId
+                                )?.name || []
+                        )}
                     ></TagsInput>
                     {ingredientsValues}
                 </Stack>
                 <Stack align="center" mt="xl" title="Steps">
                     <InputLabel> Steps</InputLabel>
                     {form.values.steps?.map((_, i) => (
-                        <TextInput {...form.getInputProps(`steps.${i}`)} />
+                        <Group>
+                            <TextInput {...form.getInputProps(`steps.${i}`)} />
+                            <ActionIcon variant="subtle" color="gray" onClick={() => form.removeListItem("steps", i)}>
+                                <IconTrash
+                                    style={{ width: rem(24), height: rem(24) }}
+                                    stroke={1.5}
+                                />
+                            </ActionIcon>
+                        </Group>
                     ))}
                     <br />
                     <Button onClick={() => form.insertListItem("steps", "")}>
@@ -164,11 +182,9 @@ export function RecipeFormModal(props: {
             </Form>
             <IngredientsModal
                 close={(moreIngr: boolean, newIng?: IIngredient) => {
-                    if(!moreIngr)
-                        setIngrOpened(false);
+                    if (!moreIngr) setIngrOpened(false);
                     setNewIngrName("");
-                    if(!newIng || !newIng.id)
-                        return;
+                    if (!newIng || !newIng.id) return;
                     form.insertListItem("ingredients", {
                         IngredientId: newIng?.id,
                         value: 100,

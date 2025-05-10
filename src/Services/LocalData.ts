@@ -72,6 +72,11 @@ export class LocalDataService implements IDataService {
         //TODO init ingredients
         console.log("finished loading", Date.now());
     }
+    DeleteAllMeals(): IMeal[] {
+        this.UserData.Meals = [];
+        this.saveMeals(this.UserData.Meals);
+        return this.UserData.Meals;
+    }
     GetIngredients(): IIngredient[] {
         return this.UserData.Ingredients || [];
     }

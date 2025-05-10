@@ -20,6 +20,7 @@ export interface IDataService {
   AddMeals(meals: IMeal | IMeal[]): IMeal[];
   UpdateMeal(meal: IMeal): IMeal[];
   DeleteMeal(id: number): IMeal[];
+  DeleteAllMeals(): IMeal[];
 
   GetIngredients(): IIngredient[];
   AddIngredients(ingredients: IIngredient | IIngredient[]): IIngredient[];
