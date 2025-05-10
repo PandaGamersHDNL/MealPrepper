@@ -2,6 +2,7 @@ import { IImpexList } from "./ImpexList";
 import { IIngredient } from "./Ingredient";
 import { IMeal } from "./Meal";
 import { IRecipe } from "./Recipe";
+import { ITag } from "./Tag";
 import { IUserData } from "./UserData";
 //import { IUserSettings } from "./UserSettings";
 
@@ -31,10 +32,10 @@ export interface IDataService {
   AddFridge(value: IIngredient);
   UpdateFridge(value: IIngredient);
   DeleteFridge(value: IIngredient);
-
-  GetTags(): ITag;
-  AddTag(value: ITag);
-  DelTag(id: number);*/
+*/
+  GetTags(): ITag[];
+  AddTag(value: ITag): ITag[];
+  DelTag(id: number): ITag[];
   //GetUserSettings(): IUserSettings,
   //UpdateUserSettings(userSettings: IUserSettings): boolean
 }
