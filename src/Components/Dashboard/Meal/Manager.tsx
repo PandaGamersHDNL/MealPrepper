@@ -8,14 +8,14 @@ import { UserDataCTX } from "../../../App";
 
 export function MealManager() {
     const [opened, { open, close }] = useDisclosure(false);
-    const DataManager = useContext(UserDataCTX)!.dataManager;
-    //TODO update meals after deletion here so the list updates
+    const userDataCtx = useContext(UserDataCTX);
+    //TODO? confirmation
     return (
         <Stack >
             <Group grow={true}>
                 <Button onClick={open}>generate meals</Button>
                 <GroceryListManager />
-                <Button onClick={()=> {DataManager.DeleteAllMeals();}}>Clear all</Button>
+                <Button onClick={()=> {userDataCtx!.setUserData({Meals: userDataCtx!.dataManager.DeleteAllMeals()})}}>Clear all</Button>
             </Group>
             <MealList />
             <MealModal opened={opened} Close={close} />
