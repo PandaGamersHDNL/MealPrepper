@@ -3,7 +3,7 @@ import { IImpexList } from "../Interfaces/ImpexList";
 import { IIngredient } from "../Interfaces/Ingredient";
 //import { IIngredient } from "../Interfaces/Ingredient";
 import { IMeal } from "../Interfaces/Meal";
-import { IRecipe } from "../Interfaces/Recipe";
+import { createEmptyRecipe, IRecipe } from "../Interfaces/Recipe";
 import { ITag } from "../Interfaces/Tag";
 import { IUserData } from "../Interfaces/UserData";
 
@@ -46,12 +46,16 @@ export class LocalDataService implements IDataService {
             this.UserData.Recipes = JSON.parse(recipeData)
             console.log("parse successfull");
             //find highest id
-            this.UserData.Recipes!.forEach(v => {
+            this.UserData.Recipes!.forEach((v, i) => {
                 if (v.id && v.id > this.recipeId) {
                     this.recipeId = v.id;
                 }
+                
+                this.UserData.Recipes![i] = {...createEmptyRecipe(), ...v};
+                
             })
             this.recipeId++;
+            this.saveRecipes(UserData.Recipes);
         } catch {
             this.saveRecipes();
         }
@@ -96,6 +100,7 @@ export class LocalDataService implements IDataService {
     }
     
     AddTag(value: ITag): ITag[] {
+        value.id = this.tagId++;
         this.UserData.Tags!.push(value);
         this.saveTags(this.UserData.Tags);
         return this.UserData.Tags!;
