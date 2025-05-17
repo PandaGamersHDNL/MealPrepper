@@ -47,7 +47,11 @@ export function RecipeFormModal(props: {
         globalData.Ingredients!.map((v) => {
             return { value: v.name };
         }) || [];
-    console.log(form.values.ingredients);
+
+    const tags: ComboboxStringItem[] =
+        globalData.Tags!.map((v) => {
+            return { value: v.name };
+        }) || [];
 
     const ingredientsValues = form.values.ingredients!.map<JSX.Element>(
         (v, i) => {
@@ -70,7 +74,7 @@ export function RecipeFormModal(props: {
     );
     return (
         <Modal
-            onClose={props.close}
+            onClose={() => {props.close(); form.setValues(props.data)}}
             opened={props.opened}
             centered
             title={"Recipe"}
@@ -92,6 +96,48 @@ export function RecipeFormModal(props: {
                     label="Description"
                     {...form.getInputProps("description")}
                 />
+                <TagsInput label="Tags"
+                    data={tags}
+                    onOptionSubmit={(v) => {
+                        if (v == "") return;
+                        let id =
+                            DataManager.GetTags()!.find((i) => i.name == v)
+                                ?.id || -1;
+                        if (id < 0) {
+                            //setNewIngrName(v);
+                            console.info("tag created");
+                            const newTags = DataManager.AddTag({ name: v });
+                            id = newTags[newTags.length -1].id!
+                            return;
+                        }
+                        form.insertListItem("tagIds", id.toString());
+                        console.log("on option submit", v, id);
+
+                    }}
+                    onRemove={(v) => {
+                        console.log("removed", v);
+                        const id = DataManager.GetTags().find(
+                            (i) => i.name == v
+                        )!.id!;
+                        const index = form.values.tagIds!.findIndex(
+                            (i) => i == id
+                        );
+                        form.removeListItem("tagIds", index);
+                    }}
+                    value={form.values.tagIds?.flatMap(
+                        (v) => {
+
+                            const tag = globalData.Tags?.find(
+                                (filter) => filter.id == v
+                            );
+                            console.log(form.values.tagIds);
+                            console.log(tag);
+                            
+                            return tag?.name || [];
+                        }
+                            
+                    )}
+                ></TagsInput>
                 <Group>
                     <NumberInput
                         suffix=" min"
@@ -153,7 +199,11 @@ export function RecipeFormModal(props: {
                     {form.values.steps?.map((_, i) => (
                         <Group>
                             <TextInput {...form.getInputProps(`steps.${i}`)} />
-                            <ActionIcon variant="subtle" color="gray" onClick={() => form.removeListItem("steps", i)}>
+                            <ActionIcon
+                                variant="subtle"
+                                color="gray"
+                                onClick={() => form.removeListItem("steps", i)}
+                            >
                                 <IconTrash
                                     style={{ width: rem(24), height: rem(24) }}
                                     stroke={1.5}

@@ -2,7 +2,7 @@ export interface IIngredient {
   id?: number;
   name: string;
   messure: string; //st or g or kg ...
-  //TODO add tags
+  tags: number[]
 }
 
 export interface IIngredientValue {
@@ -12,5 +12,5 @@ export interface IIngredientValue {
 }
 
 export function CreateEmptyIngredient(): IIngredient {
-  return { name: "", messure: "g" };
+  return { name: "", messure: "g", tags: [] };
 }

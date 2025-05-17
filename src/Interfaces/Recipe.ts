@@ -3,6 +3,7 @@ import { IIngredientValue } from "./Ingredient"
 export interface IRecipe {
     id?: number
     title?: string,
+    tagIds?: number[],
     totalTime?: number,
     prepTime?: number,
     cookTime?: number,
@@ -19,6 +20,7 @@ export function createEmptyRecipe():IRecipe {
         totalTime: undefined,
         prepTime: undefined,
         cookTime: undefined,
+        tagIds: [],
         ingredients: [],
         steps: [],
         description: ""
