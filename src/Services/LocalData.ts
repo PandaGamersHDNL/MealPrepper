@@ -3,7 +3,8 @@ import { IImpexList } from "../Interfaces/ImpexList";
 import { IIngredient } from "../Interfaces/Ingredient";
 //import { IIngredient } from "../Interfaces/Ingredient";
 import { IMeal } from "../Interfaces/Meal";
-import { IRecipe } from "../Interfaces/Recipe";
+import { createEmptyRecipe, IRecipe } from "../Interfaces/Recipe";
+import { ITag } from "../Interfaces/Tag";
 import { IUserData } from "../Interfaces/UserData";
 
 //TODO Make sure every function returns the new state of the items
@@ -13,10 +14,12 @@ export class LocalDataService implements IDataService {
     private recipeId = 0;
     private mealId = 0;
     private ingredientId = 0;
+    private tagId = 0;
     //names of the local storage item
     private static recipeName = "Recipes";
     private static mealName = "Meals";
     private static ingredientName = "Ingredients";
+    private static tagName = "Tags";
     //private static ingreName = "Ingredients";
     constructor(private UserData: IUserData) {
         console.log("init local data", Date.now());
@@ -43,12 +46,16 @@ export class LocalDataService implements IDataService {
             this.UserData.Recipes = JSON.parse(recipeData)
             console.log("parse successfull");
             //find highest id
-            this.UserData.Recipes!.forEach(v => {
+            this.UserData.Recipes!.forEach((v, i) => {
                 if (v.id && v.id > this.recipeId) {
                     this.recipeId = v.id;
                 }
+                
+                this.UserData.Recipes![i] = {...createEmptyRecipe(), ...v};
+                
             })
             this.recipeId++;
+            this.saveRecipes(UserData.Recipes);
         } catch {
             this.saveRecipes();
         }
@@ -69,8 +76,40 @@ export class LocalDataService implements IDataService {
             this.saveIngredients();
         }
 
+        const tagsData = window.localStorage.getItem(LocalDataService.tagName);
+        try {
+            if (!tagsData) throw Error("no ingredient data");
+            this.UserData.Tags = JSON.parse(tagsData) as ITag[];
+            console.log("parse successfull");
+            //find highest id
+            this.UserData.Tags!.forEach(v => {
+                if (v.id && v.id > this.tagId) {
+                    this.tagId = v.id;
+                }
+            })
+            this.tagId++;
+        } catch {
+            this.saveTags();
+        }
+
         //TODO init ingredients
         console.log("finished loading", Date.now());
+    }
+    GetTags(): ITag[] {
+        return this.UserData.Tags || [];
+    }
+    
+    AddTag(value: ITag): ITag[] {
+        value.id = this.tagId++;
+        this.UserData.Tags!.push(value);
+        this.saveTags(this.UserData.Tags);
+        return this.UserData.Tags!;
+    }
+    DelTag(id: number): ITag[] {
+        console.info("deleting tag", id);
+        const res = this.GetTags().filter((v)=> v.id != id);
+        this.saveTags(res);
+        return res;
     }
     DeleteAllMeals(): IMeal[] {
         this.UserData.Meals = [];
@@ -204,6 +243,11 @@ export class LocalDataService implements IDataService {
 
     private saveIngredients(ingredients: IIngredient[] = []){
         window.localStorage.setItem(LocalDataService.ingredientName, JSON.stringify(ingredients));
+        console.log("saving ingredients");
+    }
+
+    private saveTags(tags: ITag[] = []){
+        window.localStorage.setItem(LocalDataService.tagName, JSON.stringify(tags));
         console.log("saving ingredients");
     }
 }
