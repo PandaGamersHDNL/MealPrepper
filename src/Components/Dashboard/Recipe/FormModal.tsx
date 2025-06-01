@@ -152,6 +152,7 @@ export function RecipeFormModal(props: {
                     label="Calories"
                     {...form.getInputProps("calories")}
                 />
+                <NumberInput label="Servings" {...form.getInputProps("servings")}/>
                 <Rating fractions={2} {...form.getInputProps("rating")} />
                 <Stack align="center" mt="xl" title="Ingredients">
                     <Title size="h1"> Ingredients</Title>

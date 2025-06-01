@@ -11,7 +11,8 @@ export interface IRecipe {
     steps?: string[],
     description?: string,
     calories?: number,
-    rating?: number
+    rating?: number,
+    servings?: number // a serving can be a cookie for cookies or a serving as in a plate of food
 }
 
 export function createEmptyRecipe():IRecipe {
@@ -23,6 +24,7 @@ export function createEmptyRecipe():IRecipe {
         tagIds: [],
         ingredients: [],
         steps: [],
-        description: ""
+        description: "",
+        servings: 1
     }
 }
